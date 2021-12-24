@@ -34,7 +34,7 @@
     <td>{{$product->name}}</td>
     <td>${{number_format($product->price)}}</td>
     <td>{{$product->discount}}%</td>
-    <td>{{$product->discount}} pzas</td>
+    <td>0 pzas</td>
     <td>
     <form action="{{ route('products.destroy',$product->id) }}" method="POST">   
         <a class="btn btn-info btn-sm" href="{{ route('products.show',$product->id) }}">Show</a>    

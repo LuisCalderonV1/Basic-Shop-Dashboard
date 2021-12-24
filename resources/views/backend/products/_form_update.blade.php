@@ -1,4 +1,4 @@
-<form method="post"  action="{{ route('products.update', $product->id) }}">
+<form method="post"  action="{{ route('products.update', $product->id) }}"  enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <div class="form-group">
@@ -26,10 +26,10 @@
     <input type="text" class="form-control" id="discount" name="discount"  value="{{$product->discount}}">
   </div>
   <div class="form-group">
-      <h3>Images</h3>
-      <div class="col-12 col-md-4">
-          <label for="image" class="">Image</label>
-          <input type="text" class="form-control" id="discount" name="image"  value="{{$product->image}}">
+      <h3>Image</h3>
+      <div class="col-12 col-md-4 p-0">
+          <img src="{{url('images') . '/' . $product->image}}" alt="" id="img-1" width="200px">
+          <input type="file" class="file-input my-2" name="image" onchange="previewFile(this, 1);">
       </div>
   </div>
   <a href="{{route('products.index')}}" class="btn btn-secondary">Back</a>

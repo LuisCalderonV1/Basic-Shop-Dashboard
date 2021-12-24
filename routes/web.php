@@ -13,9 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', 'SiteController@index')->name('public');
 
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);

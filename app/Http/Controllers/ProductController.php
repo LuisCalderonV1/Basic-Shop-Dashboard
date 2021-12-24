@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use App\Http\Requests\StoreProductPost;
+use App\Http\Requests\UpdateProductPost;
 
 class ProductController extends Controller
 {
@@ -21,7 +23,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(1);
+        $products = Product::paginate(10);
         return view('backend/index', ['products' => $products]);
     }
 
@@ -42,19 +44,23 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProductPost $request)
     {
-        $product = new Product;
-        $product->name = $request->name;
-        $product->category_id = $request->category_id;
-        $product->reference = $this->generateRandomString();
-        $product->description = $request->description;
-        $product->price = $request->price;
-        $product->image = $request->image;
-        $product->discount = $request->discount;
+        $validated = $request->validated();
 
-        $product->save();
-        return redirect('products/')->withStatus('Data Has Been inserted');
+        if($validated){
+            $product = new Product;
+            $product->name = $request->name;
+            $product->category_id = $request->category_id;
+            $product->reference = $this->generateRandomString();
+            $product->description = $request->description;
+            $product->price = $request->price;
+            $product->image = $this->imageUpload($request);
+            $product->discount = $request->discount;
+    
+            $product->save();
+            return redirect('products/')->withStatus('Data Has Been inserted');
+        }
 
     }
 
@@ -90,18 +96,22 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProductPost $request, $id)
     {
-        $product = Product::findOrFail($id);
-        $product->category_id = $request->category_id;
-        $product->name = $request->name;
-        $product->description = $request->description;
-        $product->price = $request->price;
-        $product->image = $request->image;
-        $product->discount = $request->discount;
+        $validated = $request->validated();
 
-        $product->save();
-        return redirect('products/')->withStatus('Data Has Been updated');
+        if($validated){
+            $product = Product::findOrFail($id);
+            $product->category_id = $request->category_id;
+            $product->name = $request->name;
+            $product->description = $request->description;
+            $product->price = $request->price;
+            $product->image = $this->imageUpload($request,$product);
+            $product->discount = $request->discount;
+    
+            $product->save();
+            return redirect('products/')->withStatus('Data Has Been updated');
+        }
     }
 
     /**
@@ -125,5 +135,22 @@ class ProductController extends Controller
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+    public function imageUpload(Request $request, $product=null)
+    {
+        if($product){
+            $image_path = public_path() . '/images/' . $product->image; 
+            if (File::exists($image_path)) {
+                unlink($image_path);
+            }
+        }
+
+        $imageName = time().'.'.$request->image->extension();  
+   
+        $request->image->move(public_path('images'), $imageName);
+   
+        return $imageName;
+   
     }
 }

@@ -15,7 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->integer('category_id'); //agregar llave foranea y checar tipos compatibles entre migraciones
+            $table->unsignedBigInteger('category_id'); 
             $table->string('reference',10);
             $table->string('name', 255);
             $table->text('description');
@@ -23,6 +23,8 @@ class CreateProductsTable extends Migration
             $table->smallInteger('price');
             $table->smallInteger('discount');
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 
