@@ -6,7 +6,7 @@
     <div class="col-12 col-md-4">
         <div class="card"  style="width: 18rem;">
             <a href="">
-                <img src="{{url('images') . '/' . $product->image}}" class="img-fluid" alt="..." >
+                <img src="{{url('images') . '/' . $product->image}}" class="card-img-top" alt="..." >
             </a>
             <div class="card-body">
                 <h5 class="card-title mb-0">{{$product->name}}</h5>
