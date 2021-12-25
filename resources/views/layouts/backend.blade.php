@@ -78,10 +78,11 @@
            $(document).ready(function (){
                 $('#deleteModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget) 
-                var recipient = button.data('url') 
+                var url = button.data('url') 
+                var item = button.data('item') 
                 var modal = $(this)
-                modal.find('.modal-title').text('Delete ' + recipient)
-                modal.find('#form').attr('action', recipient);
+                modal.find('#message-text').text(item)
+                modal.find('#form').attr('action', url);
                 })
            });
         </script>

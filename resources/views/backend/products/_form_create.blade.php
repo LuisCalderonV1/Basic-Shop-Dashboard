@@ -25,6 +25,10 @@
     <input type="text" class="form-control" id="discount" name="discount">
   </div>
   <div class="form-group">
+    <label for="stock">Stock</label>
+    <input type="text" class="form-control" id="stcok" name="stock">
+  </div>
+  <div class="form-group">
       <h3>Image</h3>
       <div class="col-12 col-md-4 p-0">
           <img src="" alt="" id="img-1" width="200px">

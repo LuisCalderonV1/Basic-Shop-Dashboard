@@ -1,5 +1,32 @@
 @extends('layouts.backend')
 @section('content')
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm to delete this item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <p id="message-text"></p>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <form action="{{ route('products.destroy',1) }}" method="POST" id="form">   
+              @csrf
+              @method('DELETE')      
+              <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
 <h2>Categories</h2>
 @if(session('status'))
     <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -32,17 +59,15 @@
     <td>{{$category->description}}</td>
     <td>{{$category->products->count()}}</td>
     <td>
-    <form action="{{ route('categories.destroy',$category->id) }}" method="POST">   
-        <a class="btn btn-info btn-sm" href="{{ route('categories.show', $category->id) }}">Show</a>    
-        <a class="btn btn-primary btn-sm" href="{{ route('categories.edit', $category->id) }}">Edit</a>   
-        @csrf
-        @method('DELETE')      
-        @if ($category->products->count()==0)
-        <button type="submit" class="btn btn-danger btn-sm">Delete</button>  
-        @else   
-        <button class="btn btn-success btn-sm" disabled>Locked</button>       
-        @endif
-    </form>
+      <a class="btn btn-info btn-sm" href="{{ route('categories.show',$category->id) }}">Show</a>    
+      <a class="btn btn-primary btn-sm" href="{{ route('categories.edit',$category->id) }}">Edit</a>  
+      @if ($category->products->count()==0)
+      <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" 
+      data-url="{{ route('categories.destroy',$category->id) }}" data-item="{{ $category->name }}">Delete</button>
+      @else   
+      <button class="btn btn-success btn-sm" disabled>Locked</button>       
+      @endif
+
     </td>
     </tr>
     @endforeach

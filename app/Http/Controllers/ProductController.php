@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Stock;
 use App\Product;
 use App\Category;
 use Illuminate\Http\Request;
@@ -57,8 +58,14 @@ class ProductController extends Controller
             $product->price = $request->price;
             $product->image = $this->imageUpload($request);
             $product->discount = $request->discount;
-    
+
             $product->save();
+
+            $stock = new Stock;
+            $stock->product_id = $product->id;
+            $stock->quantity =  $request->stock;
+    
+            $stock->save();
             return redirect('products/')->withStatus('Data Has Been inserted');
         }
 
@@ -106,11 +113,17 @@ class ProductController extends Controller
             $product->name = $request->name;
             $product->description = $request->description;
             $product->price = $request->price;
-            $product->image = $this->imageUpload($request,$product);
+            if($request->image){
+                $product->image = $this->imageUpload($request,$product);
+            }
             $product->discount = $request->discount;
-    
             $product->save();
-            return redirect('products/')->withStatus('Data Has Been updated');
+
+            $stock= Stock::where('product_id','=', $product->id)->first();
+            $stock->quantity = $request->stock;
+            $stock->save();
+
+            return redirect('products')->withStatus('Data Has Been updated');
         }
     }
 
@@ -123,6 +136,10 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);   
+
+        $stock= Stock::where('product_id','=', $product->id)->first();
+        $stock->delete();
+        
         $image_path = public_path() . '/images/' . $product->image; 
 
         if (File::exists($image_path)) {
@@ -130,6 +147,7 @@ class ProductController extends Controller
         }    
         
         $product->delete();
+
         return redirect('products/')->withStatus('Data Has Been deleted');
     }
 

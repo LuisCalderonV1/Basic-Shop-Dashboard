@@ -1,11 +1,10 @@
 @extends('layouts.backend')
 @section('content')
-
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <h5 class="modal-title" id="exampleModalLabel">Confirm to delete this item</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -13,7 +12,7 @@
       <div class="modal-body">
         <form>
           <div class="form-group">
-            <p id="message-text">Are you sure?</p>
+            <p id="message-text"></p>
           </div>
         </form>
       </div>
@@ -62,12 +61,12 @@
     <td>{{$product->name}}</td>
     <td>${{number_format($product->price)}}</td>
     <td>{{$product->discount}}%</td>
-    <td>0 pcs</td>
+    <td>{{$product->stock->quantity}} pcs</td>
     <td>
         <a class="btn btn-info btn-sm" href="{{ route('products.show',$product->id) }}">Show</a>    
         <a class="btn btn-primary btn-sm" href="{{ route('products.edit',$product->id) }}">Edit</a>  
         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" 
-        data-url="{{ route('products.destroy',$product->id) }}">Delete</button>
+        data-url="{{ route('products.destroy',$product->id) }}" data-item="{{ $product->name }}">Delete</button>
     </td>
     </tr>
     @endforeach
