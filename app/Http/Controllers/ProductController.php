@@ -123,6 +123,12 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);   
+        $image_path = public_path() . '/images/' . $product->image; 
+
+        if (File::exists($image_path)) {
+            unlink($image_path);
+        }    
+        
         $product->delete();
         return redirect('products/')->withStatus('Data Has Been deleted');
     }

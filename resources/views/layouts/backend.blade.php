@@ -7,7 +7,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -59,20 +59,31 @@
     <main class="container my-5">
         @yield('content')
     </main>
-    <script>
-    function previewFile(input, id) {
-        var file = $(input).get(0).files[0];
-
-        if (file) {
-            var reader = new FileReader();
-
-            reader.onload = function () {
-                $("#img-" + id).attr("src", reader.result);
-            };
-
-            reader.readAsDataURL(file);
-        }
-    }
-    </script>
+        <script>
+            function previewFile(input, id) {
+                var file = jQuery(input).get(0).files[0];
+    
+                if (file) {
+                    var reader = new FileReader();
+    
+                    reader.onload = function () {
+                        $("#img-" + id).attr("src", reader.result);
+                    };
+    
+                    reader.readAsDataURL(file);
+                }
+            }
+        </script>
+         <script>
+           $(document).ready(function (){
+                $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget) 
+                var recipient = button.data('url') 
+                var modal = $(this)
+                modal.find('.modal-title').text('Delete ' + recipient)
+                modal.find('#form').attr('action', recipient);
+                })
+           });
+        </script>
 </body>
 </html>
