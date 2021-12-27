@@ -22,25 +22,23 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-            <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
-            </form>
-                <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href=""><i class="fas fa-shopping-cart"></i> Cart</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href=""><i class="fas fa-stream"></i> Categories</a>
-                </li>
-                <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @auth
-                            <li class="nav-item dropdown active">
+              <form class="form-inline my-2 my-lg-0 d-none d-md-block">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+              </form>
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href=""><i class="fas fa-shopping-cart"></i> Cart</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href=""><i class="fas fa-stream"></i> Categories</a>
+              </li>    
+                 <!-- Authentication Links -->
+                       @auth
+                          <li class="nav-item dropdown active">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 <i class="fas fa-user"></i> {{ Auth::user()->name }}
                                 </a>
-
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                   <a class="dropdown-item" href="{{route('products.index')}}">Dashboard</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -58,19 +56,25 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('login')}}"><i class="fas fa-user"></i> Login</a>
                         </li>
-                        @endguest
-                    </ul>
-                </ul>
+                        @endguest                         
             </div>
         </nav>
+        <ul class="nav bg-dark w-100">          
+          <li class="nav-item w-100">
+            <form class="form-inline my-2 my-lg-0 d-flex d-md-none px-2 justify-content-center">
+              <input class="form-control d-inline-block" style="width:80%;" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+          </li>
+        </ul>
         <ul class="nav border-bottom bg-white">          
           @for ($n=0;$n<=3 && $n<$categories->count();$n++)
           <li class="nav-item">
             <a class="nav-link active" href="#"><b>{{$categories[$n]->name}}</b></a>
           </li>
           @endfor
-      </ul>
-    </header>
+        </ul>       
+      </header>
     <main class="container my-5">
         @yield('content')
     </main>
