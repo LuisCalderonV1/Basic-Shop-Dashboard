@@ -11,6 +11,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <header>
@@ -21,19 +22,23 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
+            <form class="form-inline my-2 my-lg-0">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+            </form>
                 <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="">Cart</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href=""><i class="fas fa-shopping-cart"></i> Cart</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Categories</a>
+                <li class="nav-item active">
+                    <a class="nav-link" href=""><i class="fas fa-stream"></i> Categories</a>
                 </li>
                 <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @auth
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown active">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                <i class="fas fa-user"></i> {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -51,13 +56,20 @@
                         @endauth
                         @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('login')}}">Login</a>
+                            <a class="nav-link" href="{{route('login')}}"><i class="fas fa-user"></i> Login</a>
                         </li>
                         @endguest
                     </ul>
                 </ul>
             </div>
         </nav>
+        <ul class="nav border-bottom bg-white">          
+          @for ($n=0;$n<=3 && $n<$categories->count();$n++)
+          <li class="nav-item">
+            <a class="nav-link active" href="#"><b>{{$categories[$n]->name}}</b></a>
+          </li>
+          @endfor
+      </ul>
     </header>
     <main class="container my-5">
         @yield('content')
@@ -111,18 +123,11 @@
           <h6 class="text-uppercase fw-bold mb-4">
             Products
           </h6>
+          @for ($n=0;$n<=3 && $n<$categories->count();$n++)
           <p>
-            <a href="#!" class="text-reset">Angular</a>
+            <a href="#!" class="text-reset">{{$categories[$n]->name}}</a>
           </p>
-          <p>
-            <a href="#!" class="text-reset">React</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">Vue</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">Laravel</a>
-          </p>
+          @endfor
         </div>
         <!-- Grid column -->
 
@@ -169,9 +174,8 @@
   <!-- Section: Links  -->
 
   <!-- Copyright -->
-  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-    © 2022 Copyright:
-    <a class="text-reset fw-bold" href="">MyShop</a>
+  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">    
+    <a class="text-reset fw-bold" href="">MyShop</a> | 2022
   </div>
   <!-- Copyright -->
 </footer>

@@ -28,6 +28,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('categories.index')}}">Categories</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('users.index')}}">Users</a>
+                </li>
                 <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @auth

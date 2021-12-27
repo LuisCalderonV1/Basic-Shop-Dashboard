@@ -18,6 +18,7 @@ Route::get('/', 'SiteController@index')->name('public');
 
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
+Route::resource('users', UserController::class);
 
 Auth::routes();
 
