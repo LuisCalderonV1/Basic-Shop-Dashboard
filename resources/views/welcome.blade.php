@@ -3,30 +3,6 @@
 <div class="banner d-flex justify-content-center">
     <img src="{{url('images/banner.jpg')}}" alt="" class="img-fluid">
 </div>
-<!--categories-->
-<div class="py-3">
-    <div class="row">
-        <div class="col">
-            <h2>Categories</h2>
-        </div>
-    </div>
-    <div class="row d-flex justify-content-center">
-        @foreach ($categories as $category)
-        <div class="col-10 col-md-4 mb-3">
-            <div class="card" >
-                <a href="">
-                    <img src="{{url('images') . '/' . $category->image}}" class="card-img-top p-1" alt="..." >
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">{{$category->name}}</h5>
-                    <p class="card-text">{{$category->description}}</p>
-                </div>
-            </div>
-        </div>    
-        @endforeach
-    </div>
-    <a href="" class="btn btn-primary mt-3">See more <i class="fas fa-arrow-right"></i></a>
-</div>
 <!--New-products-->
 <div class="py-3">
     <div class="row">
@@ -42,6 +18,20 @@
         @endforeach
     </div>
     <a href="" class="btn btn-primary mt-3">See more <i class="fas fa-arrow-right"></i></a>
+</div>
+<!--categories-->
+<div class="py-3">
+    <div class="row">
+        <div class="col">
+            <h2>Categories</h2>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        @foreach ($categories as $category)
+        @include('frontend._category-card')  
+        @endforeach
+    </div>
+    <a href="{{route('frontend.categories.index')}}" class="btn btn-primary mt-3">See more <i class="fas fa-arrow-right"></i></a>
 </div>
 <!--offers-->
 <div class="py-3">
