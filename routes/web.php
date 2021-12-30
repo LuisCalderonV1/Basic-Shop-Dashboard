@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', 'SiteController@index')->name('public');
+Route::get('/', 'SiteController@index')->name('frontend/home');
+Route::get('/show/product/{product}', 'frontend\ProductController@show')->name('showproduct');
 
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
