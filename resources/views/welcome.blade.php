@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
 <div class="banner d-flex justify-content-center">
-    <img src="{{url('images/banner.jpg')}}" alt="" class="img-fluid">
+    <img src="{{url('images/banner.png')}}" alt="" class="img-fluid">
 </div>
 <!--New-products-->
 <div class="py-3">
@@ -17,7 +17,7 @@
         </div>
         @endforeach
     </div>
-    <a href="" class="btn btn-primary mt-3">See more <i class="fas fa-arrow-right"></i></a>
+    <a href="{{route('frontend.products.show_new')}}" class="btn btn-primary mt-3">See more <i class="fas fa-arrow-right"></i></a>
 </div>
 <!--categories-->
 <div class="py-3">
@@ -47,7 +47,7 @@
         </div>  
         @endforeach
     </div>
-    <a href="" class="btn btn-primary mt-3">See more <i class="fas fa-arrow-right"></i></a>
+    <a href="{{route('frontend.products.show_offers')}}" class="btn btn-primary mt-3">See more <i class="fas fa-arrow-right"></i></a>
 </div>
 <!--last-in-category-->
 <div class="py-3">
@@ -63,6 +63,6 @@
         </div> 
         @endforeach
     </div>
-    <a href="" class="btn btn-primary mt-3">See more <i class="fas fa-arrow-right"></i></a>
+    <a href="{{ route('frontend.categories.show',$random_category->id) }}" class="btn btn-primary mt-3">See more <i class="fas fa-arrow-right"></i></a>
 </div>
 @endsection

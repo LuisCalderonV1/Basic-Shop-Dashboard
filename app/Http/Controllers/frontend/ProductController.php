@@ -20,4 +20,28 @@ class ProductController extends Controller
         $related = (array_chunk($rel, 2, true));
         return view('frontend/show-product', ['product' => $product, 'categories' => $categories, 'related' => $related]);
     }
+
+    /**
+     * Show all products by creted_at
+     */
+    public function show_new()
+    {
+        $title = 'New Products';
+        $categories = Category::all();
+        $products = Product::orderBy('created_at', 'desc')->paginate(10);
+        return view('frontend/show-products', ['products' => $products, 'categories' => $categories, 'title' => $title]);
+    }
+
+    /**
+     * Show all offers
+     */
+    public function show_offers()
+    {
+        $title = 'All offers';
+        $categories = Category::all();
+        //$products = Product::orderBy('created_at', 'desc')->paginate(10);
+        $products = Product::where('discount', '>', 0)->orderBy('created_at', 'desc')->paginate(10);
+        return view('frontend/show-products', ['products' => $products, 'categories' => $categories, 'title' => $title]);
+    }
+
 }

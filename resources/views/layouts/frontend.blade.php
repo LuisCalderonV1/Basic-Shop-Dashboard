@@ -31,7 +31,7 @@
                 <a class="nav-link" href=""><i class="fas fa-shopping-cart"></i> Cart</a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href=""><i class="fas fa-stream"></i> Categories</a>
+                <a class="nav-link" href="{{route('frontend.categories.index')}}"><i class="fas fa-stream"></i> Categories</a>
               </li>    
                  <!-- Authentication Links -->
                        @auth
@@ -72,7 +72,7 @@
         <ul class="nav border-bottom">          
           @for ($n=0;$n<=3 && $n<$categories->count();$n++)
           <li class="nav-item">
-            <a class="nav-link active" href="#"><b>{{$categories[$n]->name}}</b></a>
+            <a class="nav-link active" href="{{route('frontend.categories.show',$categories[$n]->id)}}"><b>{{$categories[$n]->name}}</b></a>
           </li>
           @endfor
         </ul>       
@@ -129,7 +129,7 @@
               </h6>
               @for ($n=0;$n<=3 && $n<$categories->count();$n++)
               <p>
-                <a href="#!" class="text-reset">{{$categories[$n]->name}}</a>
+                <a href="{{route('frontend.categories.show',$categories[$n]->id)}}" class="text-reset">{{$categories[$n]->name}}</a>
               </p>
               @endfor
             </div>

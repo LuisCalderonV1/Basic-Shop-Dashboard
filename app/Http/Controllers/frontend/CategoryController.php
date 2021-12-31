@@ -21,12 +21,13 @@ class CategoryController extends Controller
     }
 
     /**
-     *show all products of one category
+     *show all products of one category ordered by newest
      */
     public function show($id)
     {
+        $title = 'All products by category';
         $categories = Category::limit(6)->orderBy('created_at', 'desc')->get(); 
         $products = Product::where('category_id', '=', $id)->orderBy('created_at', 'desc')->paginate(10);
-        return view('frontend.show-products-category', ['products' => $products, 'categories' => $categories]);
+        return view('frontend.show-products', ['products' => $products, 'categories' => $categories, 'title'=> $title]);
     }
 }

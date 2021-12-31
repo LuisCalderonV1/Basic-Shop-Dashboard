@@ -2,9 +2,10 @@
 @section('content')
 <!--All-by-category-->
 <div class="py-3">
+    <!--products-->
     <div class="row">
         <div class="col">
-            <h2>All Products in {{$products[0]->category->name}}</h2>
+            <h2>{{$title}}</h2>
         </div>
     </div>
     <div class="row">
