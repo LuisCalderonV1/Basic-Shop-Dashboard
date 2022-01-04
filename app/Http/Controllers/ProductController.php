@@ -148,7 +148,7 @@ class ProductController extends Controller
         
         $product->delete();
 
-        return redirect('products/')->withStatus('Data Has Been deleted');
+        return redirect('products')->withStatus('Data Has Been deleted');
     }
 
     protected function generateRandomString($length = 10) {

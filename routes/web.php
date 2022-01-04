@@ -20,6 +20,10 @@ Route::get('/show/categories', 'frontend\CategoryController@index')->name('front
 Route::get('/show/category/{category}', 'frontend\CategoryController@show')->name('frontend.categories.show');
 Route::get('/show/products/last', 'frontend\ProductController@show_new')->name('frontend.products.show_new');
 Route::get('/show/products/offers', 'frontend\ProductController@show_offers')->name('frontend.products.show_offers');
+Route::post('/show/products/search', 'frontend\ProductController@search')->name('frontend.products.search');
+Route::get('/shopping-cart', 'frontend\CartController@index')->name('frontend.cart.index');
+Route::delete('/shopping-cart/{item}', 'frontend\CartController@destroy')->name('frontend.cart.destroy');
+Route::post('/shopping-cart/{item}', 'frontend\CartController@store')->name('frontend.cart.store');
 
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);

@@ -4,7 +4,7 @@
 <div class="py-3">
     <div class="row">
         <div class="col">
-            <h2>All Categories</h2>
+            <h2 class="mb-4">All Categories</h2>
         </div>
     </div>
     <div class="row d-flex justify-content-center">
@@ -14,5 +14,6 @@
     </div>
 </div>
 <!--Carousel-->
+<h3>New Products</h3>
 @include('frontend._products-carousel')
 @endsection

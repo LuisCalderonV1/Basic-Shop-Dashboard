@@ -21,14 +21,16 @@
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            <!--search-form-->
             <div class="collapse navbar-collapse" id="navbarNav">
-              <form class="form-inline my-2 my-lg-0 d-none d-md-flex w-75 justify-content-end">
-                <input class="form-control mr-sm-2 w-75 " type="search" placeholder="Search" aria-label="Search">
+              <form method="post" action="{{route('frontend.products.search')}}" class="form-inline my-2 my-lg-0 d-none d-md-flex w-75 justify-content-end">
+                @csrf
+                <input name="name" class="form-control mr-sm-2 w-75 " type="search" placeholder="Search" aria-label="Search" required>
                 <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
               </form>
-            <ul class="navbar-nav ml-auto w-25 justify-content-end">
+            <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
-                <a class="nav-link" href=""><i class="fas fa-shopping-cart"></i> Cart</a>
+                <a class="nav-link" href="{{route('frontend.cart.index')}}"><i class="fas fa-shopping-cart"></i> Cart</a>
               </li>
               <li class="nav-item active">
                 <a class="nav-link" href="{{route('frontend.categories.index')}}"><i class="fas fa-stream"></i> Categories</a>
@@ -39,15 +41,15 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 <i class="fas fa-user"></i> 
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                  <a class="dropdown-item" href="#">{{ Auth::user()->name }}</a>
-                                  <hr>
-                                  <a class="dropdown-item" href="{{route('products.index')}}">Dashboard</a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">                                  
+                                    <a class="dropdown-item" href="{{route('products.index')}}"><i class="far fa-clipboard"></i> Dashboard</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>                                    
+                                        <i class="far fa-times-circle"></i> {{ __('Logout') }}
+                                    </a> 
+                                    <hr class="my-1">
+                                    <a class="dropdown-item"><i class="fas fa-sign-in-alt"></i> {{ Auth::user()->name }}</a>                                   
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
@@ -77,7 +79,7 @@
           @endfor
         </ul>       
     </header>
-    <main class="container mb-5">
+    <main class="container my-4">
         @yield('content')
     </main>
     <footer class="text-center text-lg-start bg-dark text-light">
@@ -198,6 +200,18 @@
             }
         }
     </script>
+     <script>
+           $(document).ready(function (){
+                $('#deleteModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget) 
+                var url = button.data('url') 
+                var item = button.data('item') 
+                var modal = $(this)
+                modal.find('#message-text').text(item)
+                modal.find('#form').attr('action', url);
+                })
+           });
+        </script>
 </body>
 </body>
 </html>

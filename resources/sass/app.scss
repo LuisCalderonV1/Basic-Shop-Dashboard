@@ -10,6 +10,12 @@
 //fontawesome
 @import '~@fortawesome/fontawesome-free/css/all.css';
 
+.carousel-img{
+  width: 100%;
+  height: 80vh;
+  object-fit: cover;
+}
+
 .btn-floating {
   -webkit-box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%);
   box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%);
@@ -21,10 +27,9 @@
   border-radius: 10px;
 }
 
-
 .card-img-top {
   width: 100%;
-  height: 30vh;
+  height: 40vh;
   object-fit: cover;
 }
 

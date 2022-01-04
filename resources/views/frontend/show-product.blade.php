@@ -3,25 +3,30 @@
 <div class="row product-info mt-5">
     <div class="col-12 col-md-7 px-0">
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-            <img src="{{url('images') . '/' . $product->image}}" class="d-block w-100" alt="...">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active bg-primary"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"class="bg-primary"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"class="bg-primary"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                <img src="{{url('images') . '/' . $product->image}}" class="d-block carousel-img" alt="...">
+                </div>
+                <div class="carousel-item">
+                <img src="{{url('images') . '/1640469932.jpg'}}" class="d-block carousel-img" alt="...">
+                </div>
+                <div class="carousel-item">
+                <img src="{{url('images') . '/' . $product->image}}" class="d-block carousel-img" alt="...">
+                </div>
             </div>
-            <div class="carousel-item">
-            <img src="{{url('images') . '/' . $product->image}}" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-            <img src="{{url('images') . '/' . $product->image}}" class="d-block w-100" alt="...">
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-target="#carouselExampleControls" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </button>
+            <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
+                <span class="carousel-control-prev-icon bg-primary p-3 rounded" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-target="#carouselExampleControls" data-slide="next">
+                <span class="carousel-control-next-icon bg-primary p-3 rounded" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </button>
         </div>
     </div>
     <div class="col-12 col-md-5 px-0">
@@ -39,8 +44,11 @@
             <p class="card-text h3">${{number_format($product->price)}}</p>
             @endif
             <div class="py-3">
-                <button class="btn btn-outline-danger"><b>Add to cart</b></button>
-                <button class="btn btn-danger">Buy now</button>
+                <form method="post"  action="{{ route('frontend.cart.store', $product->id) }}">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-danger"><b>Add to cart</b></button>
+                    <button type="submit" class="btn btn-danger">Buy now</button>
+                </form>
             </div>
             <a href=""><i class="fas fa-lock"></i> Security payment</a>
             <p class="card-title h5 py-4">{{$product->description}}</p>     
@@ -48,5 +56,9 @@
     </div>
 </div>
 <!--Carousel-->
-@include('frontend._products-carousel')
+<div class="my-2 my-md-5">
+    <h3>Related Products</h3>
+    @include('frontend._products-carousel')
+</div>
+
 @endsection

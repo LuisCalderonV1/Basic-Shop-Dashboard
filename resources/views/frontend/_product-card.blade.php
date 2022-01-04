@@ -15,8 +15,8 @@
             <span class="text-danger"><b>-{{$product['discount']}}%</b></span>
             <p class="card-text text-danger h5"><b>${{number_format($product['price'] - ($product['discount'] * $product['price'] / 100) )}}</b></p>
             @else
-            <span class="card-text mb-0">Only</span>
-            <p class="card-text h5 text-danger">${{number_format($product['price'])}}</p>
+            <span class="card-text mb-0"><b>Only</b></span>
+            <p class="card-text h5 text-danger"><b>${{number_format($product['price'])}}</b> </p>
             @endif
         </div>
     </a>

@@ -7,7 +7,7 @@
 <div class="py-3">
     <div class="row">
         <div class="col">
-            <h2>New Products</h2>
+            <h2 class="mb-4">New Products</h2>
         </div>
     </div>
     <div class="row">
@@ -23,7 +23,7 @@
 <div class="py-3">
     <div class="row">
         <div class="col">
-            <h2>Categories</h2>
+            <h2 class="mb-4">Categories</h2>
         </div>
     </div>
     <div class="row d-flex justify-content-center">
@@ -37,7 +37,7 @@
 <div class="py-3">
     <div class="row">
         <div class="col">
-            <h2>Last Offers</h2>
+            <h2 class="mb-4">Last Offers</h2>
         </div>
     </div>
     <div class="row">
@@ -53,7 +53,7 @@
 <div class="py-3">
     <div class="row">
         <div class="col">
-            <h2>Last in {{$random_category->name}}</h2>
+            <h2 class="mb-4">Last in {{$random_category->name}}</h2>
         </div>
     </div>
     <div class="row">

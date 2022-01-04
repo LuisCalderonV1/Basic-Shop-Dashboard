@@ -16,8 +16,9 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $product = Product::find($id);
-        $rel = Product::take(9)->get()->toArray();
-        $related = (array_chunk($rel, 2, true));
+        $category = $product->category;
+        $rel = $category->products->take(9)->toArray();
+        $related = (array_chunk($rel, 1, true));
         return view('frontend/show-product', ['product' => $product, 'categories' => $categories, 'related' => $related]);
     }
 
@@ -41,6 +42,18 @@ class ProductController extends Controller
         $categories = Category::all();
         //$products = Product::orderBy('created_at', 'desc')->paginate(10);
         $products = Product::where('discount', '>', 0)->orderBy('created_at', 'desc')->paginate(10);
+        return view('frontend/show-products', ['products' => $products, 'categories' => $categories, 'title' => $title]);
+    }
+
+    /**
+     * Show all products by search
+     */
+    public function search(Request $request)
+    {
+        $title = 'Your search results';
+        $categories = Category::all();
+        $name = $request->name;
+        $products = Product::where('name', 'LIKE', "%$name%")->paginate(10);
         return view('frontend/show-products', ['products' => $products, 'categories' => $categories, 'title' => $title]);
     }
 
