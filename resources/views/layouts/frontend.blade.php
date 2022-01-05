@@ -30,7 +30,10 @@
               </form>
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="{{route('frontend.cart.index')}}"><i class="fas fa-shopping-cart"></i> Cart</a>
+                <a class="nav-link" href="{{route('frontend.cart.index')}}">
+                  <i class="fas fa-shopping-cart"></i> 
+                  Cart <span class="bg-light px-1 rounded-circle text-dark">{{getItemsInCart()}}</span>
+                </a>
               </li>
               <li class="nav-item active">
                 <a class="nav-link" href="{{route('frontend.categories.index')}}"><i class="fas fa-stream"></i> Categories</a>

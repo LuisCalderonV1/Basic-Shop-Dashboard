@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.backend')
 
 @section('content')
 <div class="container">
@@ -13,7 +13,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <a href="{{route('products.index')}}">Go to dashboard</a>
+                    <a href="{{route('products.index')}}">Go to main panel</a>
                 </div>
             </div>
         </div>

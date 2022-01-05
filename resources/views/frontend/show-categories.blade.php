@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
 <!--categories-->
-<div class="py-3">
+<div>
     <div class="row">
         <div class="col">
             <h2 class="mb-4">All Categories</h2>

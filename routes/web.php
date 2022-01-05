@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+//frontend
 Route::get('/', 'SiteController@index')->name('frontend/home');
 Route::get('/show/product/{product}', 'frontend\ProductController@show')->name('frontend.products.show');
 Route::get('/show/categories', 'frontend\CategoryController@index')->name('frontend.categories.index');
@@ -24,11 +24,14 @@ Route::post('/show/products/search', 'frontend\ProductController@search')->name(
 Route::get('/shopping-cart', 'frontend\CartController@index')->name('frontend.cart.index');
 Route::delete('/shopping-cart/{item}', 'frontend\CartController@destroy')->name('frontend.cart.destroy');
 Route::post('/shopping-cart/{item}', 'frontend\CartController@store')->name('frontend.cart.store');
+Route::get('/checkout/shipping', 'frontend\CheckoutController@createAddress')->name('frontend.checkout.create_address');
+Route::post('/checkout/shipping', 'frontend\CheckoutController@storeAddress')->name('frontend.checkout.store_address');
 
+//backend
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
 Route::resource('users', UserController::class);
+Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');

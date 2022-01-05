@@ -47,7 +47,7 @@
         <th scope="col"></th>
         <th scope="col">Name</th>
         <th scope="col">Quantity</th>
-        <th scope="col">Price</th>
+        <th scope="col" class="d-none d-md-table-cell">Price</th>
         <th scope="col">Total</th>
         <th scope="col">Actions</th>
         </tr>
@@ -61,7 +61,7 @@
     <td class="d-flex justify-content-center"><img src="{{url('images') . '/' . $item->product->image}}" style="height:10vh;" alt="..." ></td>
     <td>{{$item->product->name}}</td>
     <td>{{$item->quantity}} pcs</td>
-    <td>
+    <td class="d-none d-md-table-cell">
         @if ($item->product->discount > 0)
         <?php $finalPrice = $item->product->price - ($item->product->discount * $item->product->price / 100) ?>
         <span class="mb-0" style="text-decoration: line-through;">${{number_format($item->product->price)}}</span>
@@ -74,15 +74,15 @@
     </td>
     <td>${{number_format($finalPrice * $item->quantity)}}</td>
     <td>
-        <a class="btn btn-info btn-sm" target="_blank" href="{{ route('frontend.products.show',$item->product->id) }}">Show</a>    
-        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal" 
+        <a class="btn btn-info btn-sm mb-2" target="_blank" href="{{ route('frontend.products.show',$item->product->id) }}">Show</a>    
+        <button type="button" class="btn btn-danger btn-sm mb-2" data-toggle="modal" data-target="#deleteModal" 
         data-url="{{ route('frontend.cart.destroy',$item->id) }}" data-item="{{ $item->product->name }}">Delete</button>
     </td>
     </tr>
     <?php $subtotal += ($finalPrice * $item->quantity); ?>
     @endforeach
-    <tr>
-      <td><b>Subtotal: ${{$subtotal}}</b></td>
+    <tr>      
+      <td></td>
       <td></td>
       <td></td>
       <td></td>
@@ -94,6 +94,8 @@
     </table>
 </div>
 <!--/table-->
+<p class="h5"><b>Subtotal: ${{number_format($subtotal)}}</b></p>
+<a class="btn btn-warning btn-lg" href="{{route('frontend.checkout.create_address')}}"><b>Proceed to buy</b></a>
 @endsection    
         
 
