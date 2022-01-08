@@ -14,18 +14,24 @@ use Illuminate\Support\Facades\Route;
 */
 
 //frontend
-Route::get('/', 'SiteController@index')->name('frontend/home');
-Route::get('/show/product/{product}', 'frontend\ProductController@show')->name('frontend.products.show');
-Route::get('/show/categories', 'frontend\CategoryController@index')->name('frontend.categories.index');
-Route::get('/show/category/{category}', 'frontend\CategoryController@show')->name('frontend.categories.show');
-Route::get('/show/products/last', 'frontend\ProductController@show_new')->name('frontend.products.show_new');
-Route::get('/show/products/offers', 'frontend\ProductController@show_offers')->name('frontend.products.show_offers');
-Route::post('/show/products/search', 'frontend\ProductController@search')->name('frontend.products.search');
-Route::get('/shopping-cart', 'frontend\CartController@index')->name('frontend.cart.index');
-Route::delete('/shopping-cart/{item}', 'frontend\CartController@destroy')->name('frontend.cart.destroy');
-Route::post('/shopping-cart/{item}', 'frontend\CartController@store')->name('frontend.cart.store');
-Route::get('/checkout/shipping', 'frontend\CheckoutController@createAddress')->name('frontend.checkout.create_address');
-Route::post('/checkout/shipping', 'frontend\CheckoutController@storeAddress')->name('frontend.checkout.store_address');
+Route::name('frontend.')->group(function () {
+    Route::get('/shopping-cart', 'frontend\CartController@index')->name('cart.index');
+    Route::get('/', 'SiteController@index')->name('site.index');
+    Route::get('/show/product/{product}', 'frontend\ProductController@show')->name('products.show');
+    Route::get('/show/categories', 'frontend\CategoryController@index')->name('categories.index');
+    Route::get('/show/category/{category}', 'frontend\CategoryController@show')->name('categories.show');
+    Route::get('/show/products/last', 'frontend\ProductController@show_new')->name('products.show_new');
+    Route::get('/show/products/offers', 'frontend\ProductController@show_offers')->name('products.show_offers');
+    Route::post('/show/products/search', 'frontend\ProductController@search')->name('products.search');
+    Route::delete('/shopping-cart/{item}', 'frontend\CartController@destroy')->name('cart.destroy');
+    Route::post('/shopping-cart/{item}', 'frontend\CartController@store')->name('cart.store');
+    Route::get('/checkout/shipping', 'frontend\CheckoutController@createOrder')->name('checkout.create_order');
+    Route::post('/checkout/shipping', 'frontend\CheckoutController@storeOrder')->name('checkout.store_order');
+});
+
+Route::get('/order_success',function () {
+    return 'Thanks';
+})->name('frontend.order_success');
 
 //backend
 Route::resource('products', ProductController::class);

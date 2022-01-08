@@ -14,12 +14,11 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $categories = Category::all();
         $product = Product::find($id);
         $category = $product->category;
         $rel = $category->products->take(9)->toArray();
         $related = (array_chunk($rel, 1, true));
-        return view('frontend/show-product', ['product' => $product, 'categories' => $categories, 'related' => $related]);
+        return view('frontend/show-product', ['product' => $product,'related' => $related]);
     }
 
     /**
@@ -28,9 +27,8 @@ class ProductController extends Controller
     public function show_new()
     {
         $title = 'New Products';
-        $categories = Category::all();
         $products = Product::orderBy('created_at', 'desc')->paginate(10);
-        return view('frontend/show-products', ['products' => $products, 'categories' => $categories, 'title' => $title]);
+        return view('frontend/show-products', ['products' => $products, 'title' => $title]);
     }
 
     /**
@@ -39,10 +37,9 @@ class ProductController extends Controller
     public function show_offers()
     {
         $title = 'All offers';
-        $categories = Category::all();
         //$products = Product::orderBy('created_at', 'desc')->paginate(10);
         $products = Product::where('discount', '>', 0)->orderBy('created_at', 'desc')->paginate(10);
-        return view('frontend/show-products', ['products' => $products, 'categories' => $categories, 'title' => $title]);
+        return view('frontend/show-products', ['products' => $products, 'title' => $title]);
     }
 
     /**
@@ -51,10 +48,9 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $title = 'Your search results';
-        $categories = Category::all();
         $name = $request->name;
         $products = Product::where('name', 'LIKE', "%$name%")->paginate(10);
-        return view('frontend/show-products', ['products' => $products, 'categories' => $categories, 'title' => $title]);
+        return view('frontend/show-products', ['products' => $products, 'title' => $title]);
     }
 
 }

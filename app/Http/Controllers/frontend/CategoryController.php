@@ -26,8 +26,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         $title = 'All products by category';
-        $categories = Category::limit(6)->orderBy('created_at', 'desc')->get(); 
         $products = Product::where('category_id', '=', $id)->orderBy('created_at', 'desc')->paginate(10);
-        return view('frontend.show-products', ['products' => $products, 'categories' => $categories, 'title'=> $title]);
+        return view('frontend.show-products', ['products' => $products, 'title'=> $title]);
     }
 }

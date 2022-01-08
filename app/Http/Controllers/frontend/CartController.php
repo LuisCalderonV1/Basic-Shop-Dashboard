@@ -16,10 +16,9 @@ class CartController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
         $uid = checkUID();
         $itemsInCart = Cart::where('uid', '=', $uid)->orderBy('created_at', 'desc')->get();  
-        return view('frontend.cart.index', ['itemsInCart' => $itemsInCart, 'categories' => $categories]);
+        return view('frontend.cart.index', ['itemsInCart' => $itemsInCart]);
     }
 
     /**

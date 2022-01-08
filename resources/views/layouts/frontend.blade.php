@@ -13,10 +13,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
-<body>
+<body> 
+<?php $categories = getCategories();?>   
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="{{route('frontend/home')}}"><b>MyShop.mx</b></a>
+            <a class="navbar-brand" href="{{route('frontend.site.index')}}"><b>MyShop.mx</b></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -74,7 +75,7 @@
             </form>
           </li>
         </ul>
-        <ul class="nav border-bottom">          
+        <ul class="nav border-bottom">               
           @for ($n=0;$n<=3 && $n<$categories->count();$n++)
           <li class="nav-item">
             <a class="nav-link active" href="{{route('frontend.categories.show',$categories[$n]->id)}}"><b>{{$categories[$n]->name}}</b></a>
@@ -82,7 +83,7 @@
           @endfor
         </ul>       
     </header>
-    <main class="container my-4">
+    <main class="container py-5">
         @yield('content')
     </main>
     <footer class="text-center text-lg-start bg-dark text-light">

@@ -24,10 +24,13 @@ class StoreProductPost extends FormRequest
     public function rules()
     {
         return [
+            'category_id' => 'required|numeric',
             'name' => 'required|unique:products|max:100',
             'description' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'price' => 'required|numeric',
+            'discount' => 'sometimes|nullable|numeric',
             'stock' => 'required|numeric',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

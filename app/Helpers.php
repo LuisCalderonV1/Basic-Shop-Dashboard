@@ -1,9 +1,9 @@
 <?php
 
 use App\Cart;
+use App\Category;
 
-function getFinalPrice($item)
-{
+function getFinalPrice($item){
     if($item->product->discount > 0){
         $finalPrice = $item->product->price - ($item->product->discount * $item->product->price / 100);
     }
@@ -18,11 +18,8 @@ function getTotalByItem($item, $finalPrice){
     return $totalByItem;
 }
 
-function getSubtotal($totalByItem){
-    $subtotal = session('subtotal');
+function getSubtotal($subtotal, $totalByItem){
     $subtotal += $totalByItem;
-    session(['subtotal' => $subtotal]);
-
     return $subtotal;
 }
 
@@ -44,4 +41,9 @@ function checkUID(){
 
     setcookie('_shop_cart_session', $uid, time()+(60*60*24*30));
     return $uid;
+}
+
+function getCategories(){
+    $categories = Category::all();
+    return $categories;
 }
