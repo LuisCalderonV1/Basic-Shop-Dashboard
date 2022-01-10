@@ -10,10 +10,18 @@
     </div>
 @endif
 <form>
-    @csrf
+  @csrf
+  <div class="form-group">
+    <label for="access">Access</label>
+    <input type="text" class="form-control" id="access" name="access" value="{{$user->rol->name}}" readonly>
+  </div>
   <div class="form-group">
     <label for="name">Name</label>
     <input type="text" class="form-control" id="name" name="name" value="{{$user->name}}" readonly>
+  </div>
+  <div class="form-group">
+    <label for="name">Lastname</label>
+    <input type="text" class="form-control" id="lastname" name="lastname" value="{{$user->lastname}}" readonly>
   </div>
   <div class="form-group">
     <label for="email">Email</label>

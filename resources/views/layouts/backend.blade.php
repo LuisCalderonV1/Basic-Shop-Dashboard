@@ -41,11 +41,11 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{route('frontend.site.index')}}"><i class="fas fa-columns"></i> FrontEnd</a>
+                                <a class="dropdown-item" href="{{route('frontend.site.index')}}"><i class="far fa-window-restore"></i> FrontEnd</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        <i class="far fa-times-circle"></i> {{ __('Logout') }}
+                                        <i class="fas fa-sign-in-alt"></i></i> {{ __('Logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

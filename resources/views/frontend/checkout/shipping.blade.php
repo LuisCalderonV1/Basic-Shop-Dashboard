@@ -1,10 +1,21 @@
+<?php use Illuminate\Support\Facades\Auth; ?>
 @extends('layouts.frontend')
 @section('content')
 <div>
     <h2>Shipping Address</h2>
 </div>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <form method="POST" action="{{route('frontend.checkout.store_order')}}">
   @csrf
+  @if(!Auth::user()->address)
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="name">Name</label>
@@ -100,31 +111,45 @@
       <span class="text-danger">{{ $message }}</span>
       @enderror
   </div>
+  @else
+  <div class="p-4 bg-light mb-4 d-flex justify-content-start">
+    <div class="p-5">
+    <p class="h3"><i class="fas fa-check"></i></p>
+    </div>
+    <div>
+      <h5>{{Auth::user()->name . " " . Auth::user()->lastname}}</h5>
+      <p class="mb-0">{{Auth::user()->address->street . " " . Auth::user()->address->inumber .  " " . Auth::user()->address->enumber }}</p>
+      <p class="mb-0">{{Auth::user()->address->suburb . ", " . Auth::user()->address->zip .  ", " . Auth::user()->address->city .  ", " . Auth::user()->address->state }}</p>
+      <p >Tel: {{Auth::user()->address->phone}}</p>
+      <a href="" class="btn btn-outline-dark">Change address</a>
+    </div>
+  </div>
+  @endif
   <div class="row py-4">
       <div class="col-12 col-md-4">
           <h2 class="mb-3">Resume</h2>
           <div class="row py-1 border-bottom">
               <div class="col-6">
-                  <p class="h4 text-muted">Subtotal:</p>
+                  <p class="h5 text-muted">Subtotal:</p>
               </div>
               <div class="col-6">
-                  <p class="h4 text-muted"><b>${{number_format($subtotal)}}</b></p>
-              </div>
-          </div>
-          <div class="row py-1 border-bottom">
-              <div class="col-6">
-                  <p class="h4 text-muted">Shipping:</p>
-              </div>
-              <div class="col-6">
-                  <p class="h4 text-muted"><b>${{number_format($shippingPrice)}}</b></p>
+                  <p class="h5 text-muted"><b>${{number_format($subtotal)}}</b></p>
               </div>
           </div>
           <div class="row py-1 border-bottom">
               <div class="col-6">
-                  <p class="h4">Total:</p>
+                  <p class="h5 text-muted">Shipping:</p>
               </div>
               <div class="col-6">
-                  <p class="h4 text-danger"><b>${{number_format($total)}}</b></p>
+                  <p class="h5 text-muted"><b>${{number_format($shippingPrice)}}</b></p>
+              </div>
+          </div>
+          <div class="row py-1 border-bottom">
+              <div class="col-6">
+                  <p class="h5">Total:</p>
+              </div>
+              <div class="col-6">
+                  <p class="h5 text-danger"><b>${{number_format($total)}}</b></p>
               </div>
           </div>
       </div>

@@ -27,11 +27,9 @@ Route::name('frontend.')->group(function () {
     Route::post('/shopping-cart/{item}', 'frontend\CartController@store')->name('cart.store');
     Route::get('/checkout/shipping', 'frontend\CheckoutController@createOrder')->name('checkout.create_order');
     Route::post('/checkout/shipping', 'frontend\CheckoutController@storeOrder')->name('checkout.store_order');
+    Route::get('/order_success/{order}', 'frontend\CheckoutController@success')->name('order_success');
 });
 
-Route::get('/order_success',function () {
-    return 'Thanks';
-})->name('frontend.order_success');
 
 //backend
 Route::resource('products', ProductController::class);
@@ -39,5 +37,6 @@ Route::resource('categories', CategoryController::class);
 Route::resource('users', UserController::class);
 Route::get('/home', 'HomeController@index')->name('home');
 
+//auth
 Auth::routes();
 

@@ -43,6 +43,7 @@
         <tr>
         <th scope="col">#</th>
         <th scope="col">Name</th>
+        <th scope="col">Access</th>
         <th scope="col">Email</th>
         <th scope="col">Created_at</th>
         <th scope="col">Actions</th>
@@ -53,7 +54,8 @@
     @foreach ($users as $user)
     <tr>
     <th scope="row">{{$n++}}</th>
-    <td>{{$user->name}}</td>
+    <td>{{$user->name . " " . $user->lastname}}</td>
+    <td>{{$user->rol->name}}</td>
     <td>{{$user->email}}</td>
     <td>{{$user->created_at}}</td>
     <td>

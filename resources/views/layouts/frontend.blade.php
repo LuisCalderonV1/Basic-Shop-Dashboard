@@ -1,10 +1,14 @@
+<?php 
+use Illuminate\Support\Facades\Auth; 
+$categories = getCategories();  
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Shop') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
@@ -14,10 +18,9 @@
 
 </head>
 <body> 
-<?php $categories = getCategories();?>   
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="{{route('frontend.site.index')}}"><b>MyShop.mx</b></a>
+            <a class="navbar-brand" href="{{route('frontend.site.index')}}"><b>{{ config('app.name', 'Shop') }}</b></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -45,15 +48,17 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 <i class="fas fa-user"></i> 
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">                                  
-                                    <a class="dropdown-item" href="{{route('products.index')}}"><i class="far fa-clipboard"></i> Dashboard</a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> 
+                                    @if(Auth::user()->rol->id == 1)                                 
+                                    <a class="dropdown-item" href="{{route('products.index')}}"><i class="far fa-window-restore"></i> Dashboard</a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        <i class="far fa-times-circle"></i> {{ __('Logout') }}
+                                        <i class="fas fa-sign-in-alt"></i></i> {{ __('Logout') }}
                                     </a> 
                                     <hr class="my-1">
-                                    <a class="dropdown-item"><i class="fas fa-sign-in-alt"></i> {{ Auth::user()->name }}</a>                                   
+                                    <a class="dropdown-item"><i class="fas fa-user"></i> {{ Auth::user()->name }}</a>                                   
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
@@ -185,7 +190,7 @@
 
       <!-- Copyright -->
       <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">    
-        <a class="text-reset fw-bold" href="">MyShop</a> | 2022
+        <a class="text-reset fw-bold" href="">{{ config('app.name', 'Shop') }}</a> | 2022
       </div>
       <!-- Copyright -->
     </footer>

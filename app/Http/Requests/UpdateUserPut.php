@@ -26,6 +26,8 @@ class UpdateUserPut extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|max:100|unique:users,id,' . $this->id,
+            'lastname' => 'required|max:50|string',
+            'rol_id' => 'numeric|required|digits_between:1,2',
         ];
     }
 }

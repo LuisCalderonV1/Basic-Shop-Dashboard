@@ -18,7 +18,7 @@
                         @else
                         <div class="col-md-4 clearfix d-none d-md-block"> 
                         @endif                   
-                        @include('frontend._product-card')
+                        @include('frontend._carousel-product-card')
                         </div>
                     <?php $n++; ?>
                     @endforeach
@@ -35,7 +35,7 @@
                         @else
                         <div class="col-md-4 clearfix d-none d-md-block"> 
                         @endif                   
-                        @include('frontend._product-card')
+                        @include('frontend._carousel-product-card')
                         </div>
                     <?php $n++; ?>
                     @endforeach
@@ -52,7 +52,7 @@
                         @else
                         <div class="col-md-4 clearfix d-none d-md-block"> 
                         @endif                   
-                        @include('frontend._product-card')
+                        @include('frontend._carousel_product-card')
                         </div>
                     <?php $n++; ?>
                     @endforeach

@@ -15,7 +15,7 @@ class CheckoutController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'check.cart']);
+        $this->middleware(['auth', 'check.cart'])->except('success');
     }
     const PAYMENT_STATUS = "Pending";
     const GENERAL_STATUS = "Pending";
@@ -44,40 +44,53 @@ class CheckoutController extends Controller
     public function storeOrder(StoreOrderPost $request)
     {
         $validated = $request->validated();
-
-        if($validated){
-            //save address
-            $address = new Address;
-            $address->user_id = Auth::id();
-            $address->phone = $request->phone;
-            $address->street = $request->street;
-            $address->enumber = $request->enumber;
-            $address->inumber = $request->inumber;
-            $address->city = $request->city;
-            $address->state = $request->state;
-            $address->suburb = $request->suburb;
-            $address->zip = $request->zip;
-            $address->phone2 = $request->phone2;
-            $address->instructions = $request->instructions;
-            $address->save();
-
-            $prices = $this->getPrices();
-            extract($prices);
-
-            //create an order
-            $order = new Order;
-            $order->user_id = auth()->user()->id;
-            $order->subtotal = $subtotal;
-            $order->shipping = self::SHIPPING_PRICE;
-            $order->total = $total;
-            $order->payment_status = self::PAYMENT_STATUS;
-            $order->general_status = self::GENERAL_STATUS;
-            $order->save();
-
-            //delete items in cart
-            $itemsInCart = Cart::where('uid', '=', $uid)->orderBy('created_at', 'desc')->delete();
-            return redirect('/order_success');
+        
+        if(!Auth::user()->address){
+            if($validated){
+                //save address
+                $address = new Address;
+                $address->user_id = Auth::id();
+                $address->phone = $request->phone;
+                $address->street = $request->street;
+                $address->enumber = $request->enumber;
+                $address->inumber = $request->inumber;
+                $address->city = $request->city;
+                $address->state = $request->state;
+                $address->suburb = $request->suburb;
+                $address->zip = $request->zip;
+                $address->phone2 = $request->phone2;
+                $address->instructions = $request->instructions;
+                $address->save();
+            }
         }
+
+        //get totals from cart
+        $prices = $this->getPrices();
+        extract($prices);
+
+        //create an order
+        $order = new Order;
+        $order->user_id = auth()->user()->id;
+        $order->subtotal = $subtotal;
+        $order->shipping = self::SHIPPING_PRICE;
+        $order->total = $total;
+        $order->payment_status = self::PAYMENT_STATUS;
+        $order->general_status = self::GENERAL_STATUS;
+        $order->save();
+
+        //delete items in cart
+        $uid = checkUID();
+        $itemsInCart = Cart::where('uid', '=', $uid)->orderBy('created_at', 'desc')->delete();
+
+        return redirect()->route('frontend.order_success', ['order'=>$order]);
+    }
+
+    /**
+     * Show the success order page
+     */
+    public function success(Order $order)
+    {
+        return view('frontend.checkout.order-success',['order' => $order]);
     }
 
     /**

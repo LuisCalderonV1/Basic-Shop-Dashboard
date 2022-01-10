@@ -7,7 +7,7 @@
             <h2 class="mb-4">All Categories</h2>
         </div>
     </div>
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex">
         @foreach ($categories as $category)
         @include('frontend._category-card')  
         @endforeach

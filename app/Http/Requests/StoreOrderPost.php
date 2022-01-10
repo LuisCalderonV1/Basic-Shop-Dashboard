@@ -24,14 +24,14 @@ class StoreOrderPost extends FormRequest
     public function rules()
     {
         return [
-            'phone' => 'required|numeric|digits:10',
-            'street' => 'required|max:100|alpha_num',
-            'enumber' => 'required|alpha_num|max:10',
-            'inumber' => 'alpha_num|max:10',
-            'city' => 'required|max:30|alpha_num',
-            'state' => 'required|max:30|string',
-            'suburb' => 'required|max:30|alpha_num',
-            'zip' => 'numeric|required|digits_between:3,10',
+            'phone' => 'sometimes|required|numeric|digits:10',
+            'street' => 'sometimes|required|max:100|alpha_num',
+            'enumber' => 'sometimes|required|alpha_num|max:10',
+            'inumber' => 'sometimes|alpha_num|max:10',
+            'city' => 'sometimes|required|max:30|alpha_num',
+            'state' => 'sometimes|required|max:30|string',
+            'suburb' => 'sometimes|required|max:30|alpha_num',
+            'zip' => 'sometimes|numeric|required|digits_between:3,10',
             'phone2' => 'sometimes|nullable|numeric|digits_between:10,10',
             'instructions' => 'sometimes|nullable|max:100|alpha_num',
         ];

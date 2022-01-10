@@ -15,7 +15,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth','check.rol']);
     }
 
     /**
@@ -51,7 +51,9 @@ class UserController extends Controller
 
         if($validated){
             $user = new User;
+            $user->rol_id = $request->rol_id;
             $user->name = $request->name;
+            $user->lastname = $request->lastname;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
 
@@ -100,6 +102,8 @@ class UserController extends Controller
         if($validated){
             $user = User::findOrFail($id);
             $user->name = $request->name;
+            $user->lastname = $request->lastname;
+            $user->rol_id = $request->rol_id;
             $user->email = $request->email;
             if($request->password){
                 $user->password = Hash::make($request->password);
