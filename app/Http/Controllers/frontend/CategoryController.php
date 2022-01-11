@@ -16,7 +16,7 @@ class CategoryController extends Controller
     {
         $categories = Category::paginate(10);
         $rel = Product::orderBy('created_at', 'DESC')->take(9)->get()->toArray();
-        $related = (array_chunk($rel, 2, true));
+        $related = (array_chunk($rel, 3, true));
         return view('frontend.show-categories', ['categories' => $categories, 'related' => $related]);
     }
 

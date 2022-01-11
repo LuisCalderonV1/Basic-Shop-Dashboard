@@ -1,5 +1,5 @@
 <div class="container my-5 px-0">
-    <!--Carousel Wrapper-md-->
+    <!--Carousel-Wrapper-medium--------------------->
     <div id="multi-item-example" class="carousel slide carousel-multi-item d-none d-md-block" data-ride="carousel">
         <!--Controls-->
         <div class="my-4">
@@ -61,7 +61,7 @@
             @endif
         </div>
     </div>
-    <!--Carousel Wrapper-Small-->
+    <!--Carousel-Wrapper-small------------>
     <div id="multi-item-example2" class="carousel slide carousel-multi-item d-block d-md-none" data-ride="carousel">
         <!--Controls-->
         <div class="my-4">
@@ -70,38 +70,42 @@
         </div>
         <!--Slides-sm-->
         <div class="carousel-inner d-block d-md-none" role="listbox">
+        <?php $n=0; ?>  
             @if(isset($related[0]))
-            <div class="carousel-item active">
-                @foreach($related[0] as $product)
-                <div class="row">
-                    <div class="col-md-4">                   
-                        @include('frontend._product-card')
-                    </div>
+            @foreach($related[0] as $product)
+            <div class="carousel-item <?= $n==0 ? 'active' : ''; ?> ">
+                <div class="row"> 
+                    <div class="col-12">
+                        @include('frontend._carousel-product-card')
+                    </div>          
                 </div>
-                @endforeach
             </div>
+            <?php $n++; ?>  
+            @endforeach
             @endif
+
             @if(isset($related[1]))
+            @foreach($related[1] as $product)
             <div class="carousel-item">
-                @foreach($related[1] as $product)
-                <div class="row">
-                    <div class="col-md-4">                   
-                        @include('frontend._product-card')
-                    </div>
+                <div class="row"> 
+                    <div class="col-12">
+                        @include('frontend._carousel-product-card')
+                    </div>          
                 </div>
-                @endforeach
             </div>
+            @endforeach
             @endif
+
             @if(isset($related[2]))
+            @foreach($related[2] as $product)
             <div class="carousel-item">
-                @foreach($related[2] as $product)
-                <div class="row">
-                    <div class="col-md-4">                   
-                        @include('frontend._product-card')
-                    </div>
+                <div class="row"> 
+                    <div class="col-12">
+                        @include('frontend._carousel-product-card')
+                    </div>          
                 </div>
-                @endforeach
             </div>
+            @endforeach
             @endif
         </div>
     </div>

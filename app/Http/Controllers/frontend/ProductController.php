@@ -17,7 +17,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         $category = $product->category;
         $rel = $category->products->take(9)->toArray();
-        $related = (array_chunk($rel, 1, true));
+        $related = (array_chunk($rel, 3, true));
         return view('frontend/show-product', ['product' => $product,'related' => $related]);
     }
 

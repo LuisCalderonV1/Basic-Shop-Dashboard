@@ -6,7 +6,9 @@ use App\Cart;
 use App\Order;
 use App\Address;
 use App\Category;
+use App\OrderContent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreOrderPost;
@@ -76,21 +78,44 @@ class CheckoutController extends Controller
         $order->total = $total;
         $order->payment_status = self::PAYMENT_STATUS;
         $order->general_status = self::GENERAL_STATUS;
+        $order->public_key = $this->generateRandomString();
         $order->save();
 
-        //delete items in cart
+        //save items in order contents table
         $uid = checkUID();
-        $itemsInCart = Cart::where('uid', '=', $uid)->orderBy('created_at', 'desc')->delete();
+        $itemsInCart = Cart::where('uid', '=', $uid)->orderBy('created_at', 'desc')->get();
 
-        return redirect()->route('frontend.order_success', ['order'=>$order]);
+        foreach($itemsInCart as $itemInCart){
+            $item = new OrderContent;
+            $item->order_id = $order->id;
+            $item->product_id = $itemInCart->product_id;
+            $item->quantity = $itemInCart->quantity;
+            $item->price_per = $itemInCart->product->price;
+            $item->discount = $itemInCart->product->discount;
+
+            $item->save();
+        }
+        
+        //delete items in cart
+        $itemsInCart = Cart::where('uid', '=', $uid)->orderBy('created_at', 'desc')->delete();
+       
+        return redirect()->route('frontend.order_success', ['order_id'=> $order->id, 'public_key' => $order->public_key]);
     }
 
     /**
      * Show the success order page
      */
-    public function success(Order $order)
+    public function success($order_id, $public_key)
     {
-        return view('frontend.checkout.order-success',['order' => $order]);
+        $order = Order::where('id', '=', $order_id)->where('public_key', '=', $public_key)->first();
+        if($order){
+            $orderContent = orderContent::where('order_id', '=', $order->id)->orderBy('created_at', 'desc')->get();
+            return view('frontend.checkout.order-success',['order' => $order, 'orderContent' => $orderContent]);
+        }
+        else{
+            abort(404, 'Not Found');
+        }
+
     }
 
     /**
@@ -111,4 +136,14 @@ class CheckoutController extends Controller
 
         return $prices= ['subtotal' => $subtotal, 'total' => $total];
     }   
+
+    protected function generateRandomString($length = 10) {
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
 }

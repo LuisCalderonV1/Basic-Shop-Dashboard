@@ -20,7 +20,8 @@ class CreateOrdersTable extends Migration
             $table->float('shipping', 8, 2);
             $table->float('total', 8, 2);
             $table->string('payment_status',100);      
-            $table->string('general_status',100);        
+            $table->string('general_status',100);  
+            $table->string('public_key',10);      
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
