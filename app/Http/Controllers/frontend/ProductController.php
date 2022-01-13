@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\frontend;
 
+use App\Stock;
 use App\Product;
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
@@ -16,7 +18,14 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $category = $product->category;
-        $rel = $category->products->take(9)->toArray();
+        //$rel = $category->products->take(9)->toArray();
+        $rel = DB::table('products')
+        ->join('stocks', 'products.id', '=', 'stocks.product_id')
+        ->select('products.*', 'stocks.*')
+        ->where('stocks.quantity', '>', '0')
+        ->take(9)
+        ->get()
+        ->toArray();
         $related = (array_chunk($rel, 3, true));
         return view('frontend/show-product', ['product' => $product,'related' => $related]);
     }
@@ -37,7 +46,6 @@ class ProductController extends Controller
     public function show_offers()
     {
         $title = 'All offers';
-        //$products = Product::orderBy('created_at', 'desc')->paginate(10);
         $products = Product::where('discount', '>', 0)->orderBy('created_at', 'desc')->paginate(10);
         return view('frontend/show-products', ['products' => $products, 'title' => $title]);
     }

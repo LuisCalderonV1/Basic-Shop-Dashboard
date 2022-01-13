@@ -47,12 +47,12 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-outline-primary">
+                                <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
 
                                 
-                                <a class="btn btn-primary" href="{{ route('register') }}">
+                                <a class="btn btn-outline-primary" href="{{ route('register') }}">
                                         {{ __('Register') }}
                                     </a>
                             </div>

@@ -22,7 +22,7 @@ class CartController extends Controller
     }
 
     /**
-     * Store a item in cart.
+     * Store an item in cart.
      */
     public function store($id)
     {

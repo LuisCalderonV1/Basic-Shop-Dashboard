@@ -5,6 +5,7 @@ namespace App\Http\Controllers\frontend;
 use App\Cart;
 use App\Order;
 use App\Address;
+use App\Product;
 use App\Category;
 use App\OrderContent;
 use Illuminate\Http\Request;
@@ -81,11 +82,18 @@ class CheckoutController extends Controller
         $order->public_key = $this->generateRandomString();
         $order->save();
 
-        //save items in order contents table
+        
         $uid = checkUID();
         $itemsInCart = Cart::where('uid', '=', $uid)->orderBy('created_at', 'desc')->get();
 
         foreach($itemsInCart as $itemInCart){
+            //decrese stocks
+            $product = Product::find($itemInCart->product_id);
+            $stock = $product->stock;
+            $stock->quantity -= $itemInCart->quantity;
+            $stock->save();
+            
+            //save items in order contents table
             $item = new OrderContent;
             $item->order_id = $order->id;
             $item->product_id = $itemInCart->product_id;

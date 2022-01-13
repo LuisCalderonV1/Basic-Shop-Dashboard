@@ -43,6 +43,7 @@
             @else
             <p class="card-text h3">${{number_format($product->price)}}</p>
             @endif
+            @if($product->stock->quantity > 0)
             <div class="py-3">
                 <form method="post"  action="{{ route('frontend.cart.store', $product->id) }}">
                     @csrf
@@ -50,6 +51,11 @@
                     <button type="submit" class="btn btn-danger">Buy now</button>
                 </form>
             </div>
+            @else
+            <div class="py-3">
+                <button class="btn btn-secondary"><b>Out of stock</b></button>
+            </div>
+            @endif
             <a href=""><i class="fas fa-lock"></i> Security payment</a>
             <p class="card-title h5 py-4">{{$product->description}}</p>     
         </div>

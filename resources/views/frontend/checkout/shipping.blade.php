@@ -4,15 +4,6 @@
 <div>
     <h2>Shipping Address</h2>
 </div>
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
 <form method="POST" action="{{route('frontend.checkout.store_order')}}">
   @csrf
   @if(!Auth::user()->address)
@@ -72,9 +63,9 @@
     </div>
     <div class="form-group col-md-4">
       <label for="state">State</label>
-      <select id="state" class="form-control" name="state" value="{{old('state')}}">
-        <option selected>Choose...</option>
-        <option>Quintana Roo</option>
+      <select id="state" class="form-control" name="state">
+        <option></option>
+        <option value="Quintana Roo" {{$selected = old('state') == 'Quintana Roo' ? 'selected' : '' }}>Quintana Roo</option>
       </select>
       @error('state')
       <span class="text-danger">{{ $message }}</span>
@@ -91,7 +82,7 @@
   <div class="form-row">
     <div class="form-group col-md-4">
       <label for="zip">Zip</label>
-      <input type="text" class="form-control" id="zip" name="zip" value="{{old('zip')}}">
+      <input type="text" class="form-control" id="zip" name="zip" value="{{old('zip')}}" maxlength="10">
       @error('zip')
       <span class="text-danger">{{ $message }}</span>
       @enderror

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\frontend;
 use App\Product;
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
@@ -15,7 +16,14 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::paginate(10);
-        $rel = Product::orderBy('created_at', 'DESC')->take(9)->get()->toArray();
+        //$rel = Product::orderBy('created_at', 'DESC')->take(9)->get()->toArray();
+        $rel = DB::table('products')
+        ->join('stocks', 'products.id', '=', 'stocks.product_id')
+        ->select('products.*', 'stocks.*')
+        ->where('stocks.quantity', '>', '0')
+        ->take(9)
+        ->get()
+        ->toArray();
         $related = (array_chunk($rel, 3, true));
         return view('frontend.show-categories', ['categories' => $categories, 'related' => $related]);
     }

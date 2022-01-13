@@ -5,6 +5,8 @@
             <div class="card-body">
                 @if ($product['discount'] > 0)
                 <p class="mb-1"><span class="bg-danger text-white small p-1 rounded"><i class="fas fa-fire-alt"></i> Hot Sale</span></p>
+                @elseif ($product->stock->quantity < 1)
+                <p class="mb-1"><span class="bg-secondary text-white small p-1 rounded"> Out of Stock</span></p>
                 @else
                 <p class="mb-1"><span class="bg-success text-white small p-1 rounded"><i class="fas fa-truck"></i> Avaliable</span></p>
                 @endif
