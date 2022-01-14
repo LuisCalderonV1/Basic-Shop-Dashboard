@@ -10,17 +10,19 @@ use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
+    const PAGINATION = "1";
     /**
      *show all categories
      */
     public function index()
     {
-        $categories = Category::paginate(10);
+        $categories = Category::paginate(self::PAGINATION);
         //$rel = Product::orderBy('created_at', 'DESC')->take(9)->get()->toArray();
         $rel = DB::table('products')
         ->join('stocks', 'products.id', '=', 'stocks.product_id')
         ->select('products.*', 'stocks.*')
         ->where('stocks.quantity', '>', '0')
+        ->orderBy('products.created_at', 'DESC')
         ->take(9)
         ->get()
         ->toArray();
@@ -34,7 +36,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         $title = 'All products by category';
-        $products = Product::where('category_id', '=', $id)->orderBy('created_at', 'desc')->paginate(10);
+        $products = Product::where('category_id', '=', $id)->orderBy('created_at', 'desc')->paginate(self::PAGINATION);
         return view('frontend.show-products', ['products' => $products, 'title'=> $title]);
     }
 }

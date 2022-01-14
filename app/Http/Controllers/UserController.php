@@ -51,10 +51,10 @@ class UserController extends Controller
 
         if($validated){
             $user = new User;
-            $user->rol_id = $request->rol_id;
-            $user->name = $request->name;
-            $user->lastname = $request->lastname;
-            $user->email = $request->email;
+            $user->rol_id = sanitize($request->rol_id);
+            $user->name = sanitize($request->name);
+            $user->lastname = sanitize($request->lastname);
+            $user->email = sanitize($request->email);
             $user->password = Hash::make($request->password);
 
             $user->save();
@@ -101,10 +101,10 @@ class UserController extends Controller
 
         if($validated){
             $user = User::findOrFail($id);
-            $user->name = $request->name;
-            $user->lastname = $request->lastname;
-            $user->rol_id = $request->rol_id;
-            $user->email = $request->email;
+            $user->name = sanitize($request->name);
+            $user->lastname = sanitize($request->lastname);
+            $user->rol_id = sanitize($request->rol_id);
+            $user->email = sanitize($request->email);
             if($request->password){
                 $user->password = Hash::make($request->password);
             }

@@ -51,19 +51,19 @@ class ProductController extends Controller
 
         if($validated){
             $product = new Product;
-            $product->name = $request->name;
-            $product->category_id = $request->category_id;
+            $product->name = sanitize($request->name);
+            $product->category_id = sanitize($request->category_id);
             $product->reference = $this->generateRandomString();
-            $product->description = $request->description;
-            $product->price = $request->price;
+            $product->description = sanitize($request->description);
+            $product->price = sanitize($request->price);
             $product->image = $this->imageUpload($request);
-            $product->discount = $request->discount;
+            $product->discount = sanitize($request->discount);
 
             $product->save();
 
             $stock = new Stock;
             $stock->product_id = $product->id;
-            $stock->quantity =  $request->stock;
+            $stock->quantity =  sanitize($request->stock);
     
             $stock->save();
             return redirect('products/')->withStatus('Data Has Been inserted');

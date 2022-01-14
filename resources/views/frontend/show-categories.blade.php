@@ -13,6 +13,7 @@
         @endforeach
     </div>
 </div>
+{{$categories->links()}}
 <!--Carousel-->
 <h3>New Products</h3>
 @include('frontend._products-carousel')

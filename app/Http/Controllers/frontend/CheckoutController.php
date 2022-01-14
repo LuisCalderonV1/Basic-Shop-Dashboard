@@ -53,16 +53,16 @@ class CheckoutController extends Controller
                 //save address
                 $address = new Address;
                 $address->user_id = Auth::id();
-                $address->phone = $request->phone;
-                $address->street = $request->street;
-                $address->enumber = $request->enumber;
-                $address->inumber = $request->inumber;
-                $address->city = $request->city;
-                $address->state = $request->state;
-                $address->suburb = $request->suburb;
-                $address->zip = $request->zip;
-                $address->phone2 = $request->phone2;
-                $address->instructions = $request->instructions;
+                $address->phone = sanitize($request->phone);
+                $address->street = sanitize($request->street);
+                $address->enumber = sanitize($request->enumber);
+                $address->inumber = sanitize($request->inumber);
+                $address->city = sanitize($request->city);
+                $address->state = sanitize($request->state);
+                $address->suburb = sanitize($request->suburb);
+                $address->zip =sanitize($request->zip);
+                $address->phone2 = sanitize($request->phone2);
+                $address->instructions = sanitize($request->instructions);
                 $address->save();
             }
         }

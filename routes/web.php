@@ -25,6 +25,7 @@ Route::name('frontend.')->group(function () {
     Route::post('/show/products/search', 'frontend\ProductController@search')->name('products.search');
     Route::delete('/shopping-cart/{item}', 'frontend\CartController@destroy')->name('cart.destroy');
     Route::post('/shopping-cart/{item}', 'frontend\CartController@store')->name('cart.store');
+    Route::post('/shopping-cart', 'frontend\CartController@ajaxStore')->name('cart.ajax_store');//ajax
     Route::get('/checkout/shipping', 'frontend\CheckoutController@createOrder')->name('checkout.create_order');
     Route::post('/checkout/shipping', 'frontend\CheckoutController@storeOrder')->name('checkout.store_order');
     Route::get('/order_success/{order_id}/{public_key}', 'frontend\CheckoutController@success')->name('order_success');

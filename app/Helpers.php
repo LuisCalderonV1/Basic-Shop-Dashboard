@@ -26,7 +26,7 @@ function getSubtotal($subtotal, $totalByItem){
 function getItemsInCart(){
     $uid = checkUID();
     $itemsInCart = Cart::where('uid', '=', $uid)->orderBy('created_at', 'desc')->get();  
-    $totalCartItems=$itemsInCart->count();
+    $totalCartItems=$itemsInCart->sum('quantity');
     return $totalCartItems;
 }
 
@@ -46,4 +46,11 @@ function checkUID(){
 function getCategories(){
     $categories = Category::all();
     return $categories;
+}
+
+function sanitize($string){
+    $string= strip_tags($string);
+    $string= htmlentities($string);
+
+    return $string;
 }

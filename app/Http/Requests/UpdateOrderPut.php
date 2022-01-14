@@ -24,8 +24,6 @@ class UpdateOrderPut extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:100|string',
-            'lastname' => 'required|max:100|string',
             'subtotal' => 'numeric|required|digits_between:3,10',
             'shipping' => 'numeric|required|digits_between:3,10',
             'total' => 'numeric|required|digits_between:3,10',

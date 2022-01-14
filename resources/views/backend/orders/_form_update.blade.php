@@ -3,11 +3,11 @@
     @method('PUT')
     <div class="form-group">
       <label for="name">Name</label>
-      <input type="text" class="form-control" id="name" name="name"  value="{{$order->user->name}}">
+      <input type="text" class="form-control" id="name" name="name"  value="{{$order->user->name}}" readonly>
     </div>
   <div class="form-group">
     <label for="lastname">Lastname</label>
-    <input type="text" class="form-control" id="lastname" name="lastname"  value="{{$order->user->lastname}}">
+    <input type="text" class="form-control" id="lastname" name="lastname"  value="{{$order->user->lastname}}" readonly>
   </div>
   <div class="form-group">
     <label for="subtotal">Subtotal</label>
@@ -37,6 +37,11 @@
     <label for="updated_at">Updated</label>
     <input type="text" class="form-control" id="updated_at" name="updated_at"  value="{{$order->updated_at}}" readonly>
   </div>
+<div class="mb-5">
   <a href="{{route('orders.index')}}" class="btn btn-secondary">Back</a>
   <button type="submit" class="btn btn-primary">Submit</button>
+</div>
 </form>
+@include('backend.orders._shipping') 
+@include('backend.orders.order_content') 
+

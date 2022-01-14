@@ -39,7 +39,6 @@
       </button>
     </div>
 @endif
-<a href="{{route('orders.create')}}" class="btn btn-primary my-3">Create</a>
 <div class="table-responsive">
     <table class="table table-striped">
     <thead>

@@ -10,6 +10,16 @@ use App\Http\Requests\UpdateOrderPut;
 class OrderController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth','check.rol']);
+    }
+    
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -49,7 +59,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::find($id);
+        $order = Order::findOrFail($id);
         $orderContent = OrderContent::where('order_id', '=', $order->id)->orderBy('created_at', 'desc')->paginate(10);
         return view('backend.orders.show', ['order' => $order, 'orderContent' => $orderContent]);
     }
@@ -63,7 +73,8 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::findOrFail($id);
-        return view('backend.orders.update', ['order' => $order]);
+        $orderContent = OrderContent::where('order_id', '=', $order->id)->orderBy('created_at', 'desc')->paginate(10);
+        return view('backend.orders.update', ['order' => $order, 'orderContent' => $orderContent]);
     }
 
     /**
@@ -79,13 +90,13 @@ class OrderController extends Controller
 
         if($validated){
             $order = Order::findOrFail($id);
-            $order->user->name = $request->name;
-            $order->user->lastname = $request->lastname;
-            $order->subtotal = $request->subtotal;
-            $order->shipping = $request->shipping;
-            $order->total = $request->total;
-            $order->payment_status = $request->payment_status;
-            $order->general_status = $request->general_status;
+            $order->user->name = sanitize($request->name);
+            $order->user->lastname = sanitize($request->lastname);
+            $order->subtotal = sanitize($request->subtotal);
+            $order->shipping = sanitize($request->shipping);
+            $order->total = sanitize($request->total);
+            $order->payment_status = sanitize($request->payment_status);
+            $order->general_status = sanitize($request->general_status);
             $order->save();
 
             return redirect('orders')->withStatus('Data Has Been updated');

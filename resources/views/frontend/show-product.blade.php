@@ -47,7 +47,7 @@
             <div class="py-3">
                 <form method="post"  action="{{ route('frontend.cart.store', $product->id) }}">
                     @csrf
-                    <button type="submit" class="btn btn-outline-danger"><b>Add to cart</b></button>
+                    <button id='add-to-cart' class="btn btn-outline-danger"><b>Add to cart</b></button>
                     <button type="submit" class="btn btn-danger">Buy now</button>
                 </form>
             </div>
@@ -66,5 +66,26 @@
     <h3>Related Products</h3>
     @include('frontend._products-carousel')
 </div>
-
+<script type = "text/javascript">
+      $('#add-to-cart').click(function(e){
+        e.preventDefault();
+        $.ajaxSetup({
+             headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             }
+         });
+        $.ajax({
+        type: 'POST',
+        url: '{{ route('frontend.cart.ajax_store') }}',
+        data: {'product_id':"{{$product->id}}"},
+        success: function(data){
+            alert(data.result);
+            $('#inCart').html(data.totalCartItems);
+        },
+        error:function(){
+            alert("Cant process your request. Try again")
+        }
+        });
+      });
+    </script>
 @endsection

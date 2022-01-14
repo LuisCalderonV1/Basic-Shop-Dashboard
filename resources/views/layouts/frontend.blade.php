@@ -8,6 +8,7 @@ $categories = getCategories();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Shop') }}</title>
 
     <!-- Scripts -->
@@ -36,7 +37,7 @@ $categories = getCategories();
               <li class="nav-item active">
                 <a class="nav-link" href="{{route('frontend.cart.index')}}">
                   <i class="fas fa-shopping-cart"></i> 
-                  Cart <span class="bg-light px-1 rounded-circle text-dark">{{getItemsInCart()}}</span>
+                  Cart <span class="bg-light px-1 rounded-circle text-dark" id="inCart">{{getItemsInCart()}}</span>
                 </a>
               </li>
               <li class="nav-item active">
@@ -50,7 +51,7 @@ $categories = getCategories();
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown"> 
                                     @if(Auth::user()->rol->id == 1)                                 
-                                    <a class="dropdown-item" href="{{route('products.index')}}"><i class="far fa-window-restore"></i> Dashboard</a>
+                                    <a class="dropdown-item" href="{{route('home')}}"><i class="far fa-window-restore"></i> Dashboard</a>
                                     @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -220,7 +221,7 @@ $categories = getCategories();
                 modal.find('#form').attr('action', url);
                 })
            });
-        </script>
+      </script>
 </body>
 </body>
 </html>

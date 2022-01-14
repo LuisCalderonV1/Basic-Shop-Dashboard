@@ -11,17 +11,19 @@ use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
+    const PAGINATION = "1";
     /**
      * Show one product by $id
      */
     public function show($id)
     {
         $product = Product::find($id);
-        $category = $product->category;
+        //$category = $product->category;
         //$rel = $category->products->take(9)->toArray();
         $rel = DB::table('products')
         ->join('stocks', 'products.id', '=', 'stocks.product_id')
         ->select('products.*', 'stocks.*')
+        ->where('products.category_id', '=', $product->category_id)
         ->where('stocks.quantity', '>', '0')
         ->take(9)
         ->get()
@@ -36,7 +38,7 @@ class ProductController extends Controller
     public function show_new()
     {
         $title = 'New Products';
-        $products = Product::orderBy('created_at', 'desc')->paginate(10);
+        $products = Product::orderBy('created_at', 'desc')->paginate(self::PAGINATION);
         return view('frontend/show-products', ['products' => $products, 'title' => $title]);
     }
 
@@ -46,7 +48,7 @@ class ProductController extends Controller
     public function show_offers()
     {
         $title = 'All offers';
-        $products = Product::where('discount', '>', 0)->orderBy('created_at', 'desc')->paginate(10);
+        $products = Product::where('discount', '>', 0)->orderBy('created_at', 'desc')->paginate(self::PAGINATION);
         return view('frontend/show-products', ['products' => $products, 'title' => $title]);
     }
 
@@ -56,8 +58,8 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $title = 'Your search results';
-        $name = $request->name;
-        $products = Product::where('name', 'LIKE', "%$name%")->paginate(10);
+        $name = sanitize($request->name);
+        $products = Product::where('name', 'LIKE', "%$name%")->paginate(self::PAGINATION);
         return view('frontend/show-products', ['products' => $products, 'title' => $title]);
     }
 

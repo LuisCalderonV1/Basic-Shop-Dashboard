@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Cart;
+use App\Product;
 use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -27,7 +28,6 @@ class CartController extends Controller
     public function store($id)
     {
         $uid = checkUID();
-
         
         $cart = Cart::where('uid', '=', $uid)->where('product_id', '=', $id)->first(); 
         
@@ -46,6 +46,46 @@ class CartController extends Controller
 
         $cart->save();
         return redirect('shopping-cart')->withStatus('Data Has Been inserted');
+    }
+
+    public function ajaxStore(Request $request)
+    {
+        $id = sanitize($request->product_id);
+        $uid = checkUID();
+        $product = Product::findOrFail($id);
+        $stock = $product->stock->quantity;
+        $cart = Cart::where('uid', '=', $uid)->where('product_id', '=', $id)->first(); 
+
+        if($cart){
+            $qtyInCart = $cart->quantity;
+        }
+        else{
+            $qtyInCart = 0;
+        }
+
+        if($stock > $qtyInCart){
+            if(empty($cart))
+            {
+                $cart = New Cart;
+                $cart->uid = $uid;
+                $cart->product_id = $id;
+                $cart->quantity = 1;
+            }
+            else
+            {
+                $cart->quantity += 1;
+            }
+            $cart->save();
+            $result = 'Product added to cart';
+        }
+        else{
+            $result = 'Insuficient inventory, ' . $stock . ' in stock';
+        }
+
+        $totalCartItems = getItemsInCart();
+        
+        
+        return response()->json(['result'=>$result, 'totalCartItems' => $totalCartItems]);
     }
     
     /**

@@ -50,8 +50,8 @@ class CategoryController extends Controller
 
         if($validated){
             $category = new Category;
-            $category->name = $request->name;
-            $category->description = $request->description;
+            $category->name = sanitize($request->name);
+            $category->description = sanitize($request->description);
             $category->image = $this->imageUpload($request);
             $category->save();
             
@@ -101,8 +101,8 @@ class CategoryController extends Controller
         if($validated){
             $category = Category::findOrFail($id);
             $category->image = $this->imageUpload($request,$category);
-            $category->name = $request->name;
-            $category->description = $request->description;
+            $category->name = sanitize($request->name);
+            $category->description = sanitize($request->description);
             $category->save();
             
             return redirect('categories')->withStatus('Data Has Been updated');
