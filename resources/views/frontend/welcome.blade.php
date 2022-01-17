@@ -4,7 +4,6 @@
     <img src="{{url('images/banner.png')}}" alt="" class="img-fluid">
 </div>
 <!--New-products-->
-
 <div class="py-3">
     <div class="row">
         <div class="col">
@@ -13,7 +12,7 @@
     </div>
     <div class="row">
         @foreach ($products as $product)
-        @include('frontend._product-card')   
+        @include('frontend.products._product-card')   
         @endforeach
     </div>
     <a href="{{route('frontend.products.show_new')}}" class="btn btn-primary mt-3">See more <i class="fas fa-arrow-right"></i></a>
@@ -27,7 +26,7 @@
     </div>
     <div class="row">
         @foreach ($categories as $category)
-        @include('frontend._category-card')  
+        @include('frontend.categories._category-card')  
         @endforeach
     </div>
     <a href="{{route('frontend.categories.index')}}" class="btn btn-primary mt-3">See more <i class="fas fa-arrow-right"></i></a>
@@ -41,7 +40,7 @@
     </div>
     <div class="row">
         @foreach ($offers as $product)
-        @include('frontend._product-card')  
+        @include('frontend.products._product-card')  
         @endforeach
     </div>
     <a href="{{route('frontend.products.show_offers')}}" class="btn btn-primary mt-3">See more <i class="fas fa-arrow-right"></i></a>
@@ -56,7 +55,7 @@
     </div>
     <div class="row">
         @foreach ($last_in_category as $product)
-        @include('frontend._product-card')
+        @include('frontend.products._product-card')
         @endforeach
     </div>
     <a href="{{ route('frontend.categories.show',$random_category->id) }}" class="btn btn-primary mt-3">See more <i class="fas fa-arrow-right"></i></a>

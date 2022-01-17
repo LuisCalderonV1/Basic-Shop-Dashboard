@@ -3,9 +3,10 @@
 @method('PUT')
 <div class="form-group">
       <label for="rol_id">Access</label>
-      <select id="rol_id" class="form-control" name="rol_id" value="{{old('rol_id')}}">
-        <option value="1" {{$user->rol_id == 1? 'selected': ''}}>Manager</option>
-        <option value="2" {{$user->rol_id == 2? 'selected': ''}}>Regular</option>
+      <select id="rol_id" class="form-control" name="rol_id">
+        @foreach($rols as $rol)
+        <option value="{{$rol->id}}" {{$user->rol->id == $rol->id? 'selected': ''}}>{{$rol->name}}</option>
+        @endforeach
       </select>
   </div>
   <div class="form-group">

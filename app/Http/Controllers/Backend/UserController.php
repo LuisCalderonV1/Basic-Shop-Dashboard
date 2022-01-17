@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
+use App\Rol;
 use App\User;
 use App\Stock;
 use App\Product;
 use App\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserPost;
 use App\Http\Requests\UpdateUserPut;
 use Illuminate\Support\Facades\Hash;
@@ -36,7 +38,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('backend/users/create');
+        $rols = Rol::all();
+        return view('backend/users/create', ['rols' => $rols]);
     }
 
     /**
@@ -84,8 +87,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $rols = Rol::all();
         $user = User::findOrFail($id);
-        return view('backend/users/update', ['user' => $user]);
+        return view('backend/users/update', ['user' => $user, 'rols' => $rols]);
     }
 
     /**

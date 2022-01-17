@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
 use App\User;
 use App\Order;
@@ -8,6 +8,7 @@ use App\Product;
 use App\Category;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -34,6 +35,6 @@ class HomeController extends Controller
         $from = Carbon::now()->startOfMonth();
         $to = Carbon::now();
         $orders = Order::whereBetween('created_at', [$from, $to])->get()->count();
-        return view('home', ['users' => $users, 'products' => $products, 'orders' => $orders, 'categories' => $categories]);
+        return view('backend.home', ['users' => $users, 'products' => $products, 'orders' => $orders, 'categories' => $categories]);
     }
 }

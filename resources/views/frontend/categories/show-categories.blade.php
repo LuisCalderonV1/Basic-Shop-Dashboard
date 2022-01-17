@@ -9,12 +9,12 @@
     </div>
     <div class="row d-flex">
         @foreach ($categories as $category)
-        @include('frontend._category-card')  
+        @include('frontend.categories._category-card')  
         @endforeach
     </div>
 </div>
 {{$categories->links()}}
 <!--Carousel-->
 <h3>New Products</h3>
-@include('frontend._products-carousel')
+@include('frontend.products._products-carousel')
 @endsection

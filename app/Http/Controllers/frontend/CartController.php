@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Cookie;
 
 class CartController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['check.stocks'])->only('index');
+    }
     /**
      * Show all the items inside shopping cart
      */
@@ -27,65 +31,33 @@ class CartController extends Controller
      */
     public function store($id)
     {
-        $uid = checkUID();
-        
-        $cart = Cart::where('uid', '=', $uid)->where('product_id', '=', $id)->first(); 
-        
-        if(empty($cart))
-        {
-            $cart = New Cart;
-            $cart->uid = $uid;
-            $cart->product_id = $id;
-            $cart->quantity = 1;
-        }
-        else
-        {
-            $cart->quantity += 1;
-        }
-        
+        $response = $this->save($id);
+        extract($response);
+        $totalCartItems = getItemsInCart();
 
-        $cart->save();
-        return redirect('shopping-cart')->withStatus('Data Has Been inserted');
+        if($result){
+            return redirect('shopping-cart')->withStatus('Data Has Been inserted');
+        }
+        else{
+            return redirect()->back()->withStatus('Insuficient inventory, ' . $stock . ' in stock');
+        }
     }
 
     public function ajaxStore(Request $request)
     {
         $id = sanitize($request->product_id);
-        $uid = checkUID();
-        $product = Product::findOrFail($id);
-        $stock = $product->stock->quantity;
-        $cart = Cart::where('uid', '=', $uid)->where('product_id', '=', $id)->first(); 
-
-        if($cart){
-            $qtyInCart = $cart->quantity;
-        }
-        else{
-            $qtyInCart = 0;
-        }
-
-        if($stock > $qtyInCart){
-            if(empty($cart))
-            {
-                $cart = New Cart;
-                $cart->uid = $uid;
-                $cart->product_id = $id;
-                $cart->quantity = 1;
-            }
-            else
-            {
-                $cart->quantity += 1;
-            }
-            $cart->save();
-            $result = 'Product added to cart';
-        }
-        else{
-            $result = 'Insuficient inventory, ' . $stock . ' in stock';
-        }
-
+        $response = $this->save($id);
+        extract($response);
         $totalCartItems = getItemsInCart();
         
+        if($result){
+            $status = 'Product added to the cart';
+        }        
+        else{
+            $status = 'Insuficient inventory, ' . $stock . ' in stock';
+        }
         
-        return response()->json(['result'=>$result, 'totalCartItems' => $totalCartItems]);
+        return response()->json(['status'=>$status, 'totalCartItems' => $totalCartItems]);
     }
     
     /**
@@ -98,5 +70,46 @@ class CartController extends Controller
         $item->delete();
 
         return redirect('shopping-cart')->withStatus('Data Has Been deleted');
+    }
+
+    private function save($id)
+    {
+        $uid = checkUID();
+        $product = Product::findOrFail($id);
+        $stock = $product->stock->quantity;
+        $cart = Cart::where('uid', '=', $uid)->where('product_id', '=', $id)->first(); 
+        
+        //fet qty in cart
+        if($cart){
+            $qtyInCart = $cart->quantity;
+        }
+        else{
+            $qtyInCart = 0;
+        }
+
+        //if there is enough stock of item add to cart
+        if($stock > $qtyInCart){
+            if(empty($cart))
+            {
+                //create new one
+                $cart = New Cart;
+                $cart->uid = $uid;
+                $cart->product_id = $id;
+                $cart->quantity = 1;
+            }
+            else
+            {
+                //update existing
+                $cart->quantity += 1;
+            }
+            $cart->save();
+            $response['result'] = true;
+        }
+        else{
+            $response['result'] = false;
+        }
+
+        $response['stock'] = $stock;
+        return $response;
     }
 }

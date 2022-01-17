@@ -20,6 +20,7 @@ class CreateOrderContentsTable extends Migration
             $table->integer('quantity');
             $table->float('price_per', 8, 2);
             $table->integer('discount');
+            $table->float('final_price', 8, 2);
             $table->date('shipped_at')->nullable();            
             $table->timestamps();
         });

@@ -27,7 +27,7 @@ class CategoryController extends Controller
         ->get()
         ->toArray();
         $related = (array_chunk($rel, 3, true));
-        return view('frontend.show-categories', ['categories' => $categories, 'related' => $related]);
+        return view('frontend.categories.show-categories', ['categories' => $categories, 'related' => $related]);
     }
 
     /**
@@ -37,6 +37,6 @@ class CategoryController extends Controller
     {
         $title = 'All products by category';
         $products = Product::where('category_id', '=', $id)->orderBy('created_at', 'desc')->paginate(self::PAGINATION);
-        return view('frontend.show-products', ['products' => $products, 'title'=> $title]);
+        return view('frontend.products.show-all-products', ['products' => $products, 'title'=> $title]);
     }
 }

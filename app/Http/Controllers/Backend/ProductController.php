@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
 use App\Stock;
 use App\Product;
@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use App\Http\Requests\StoreProductPost;
 use App\Http\Requests\UpdateProductPost;
+use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
@@ -25,7 +26,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::paginate(10);
-        return view('backend/index', ['products' => $products]);
+        return view('backend/products/index', ['products' => $products]);
     }
 
     /**

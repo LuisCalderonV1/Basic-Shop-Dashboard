@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 //frontend
 Route::name('frontend.')->group(function () {
     Route::get('/shopping-cart', 'frontend\CartController@index')->name('cart.index');
-    Route::get('/', 'SiteController@index')->name('site.index');
+    Route::get('/', 'frontend\SiteController@index')->name('site.index');
     Route::get('/show/product/{product}', 'frontend\ProductController@show')->name('products.show');
     Route::get('/show/categories', 'frontend\CategoryController@index')->name('categories.index');
     Route::get('/show/category/{category}', 'frontend\CategoryController@show')->name('categories.show');
@@ -28,16 +28,20 @@ Route::name('frontend.')->group(function () {
     Route::post('/shopping-cart', 'frontend\CartController@ajaxStore')->name('cart.ajax_store');//ajax
     Route::get('/checkout/shipping', 'frontend\CheckoutController@createOrder')->name('checkout.create_order');
     Route::post('/checkout/shipping', 'frontend\CheckoutController@storeOrder')->name('checkout.store_order');
+    Route::get('/checkout/address', 'frontend\CheckoutController@createAddress')->name('checkout.create_address');
+    Route::post('/checkout/address', 'frontend\CheckoutController@storeAddress')->name('checkout.store_address');
+    Route::get('/checkout/address/{user_id}/edit', 'frontend\CheckoutController@editAddress')->name('checkout.edit_address');
+    Route::post('/checkout/address/{address_id}', 'frontend\CheckoutController@updateAddress')->name('checkout.update_address');
     Route::get('/order_success/{order_id}/{public_key}', 'frontend\CheckoutController@success')->name('order_success');
 });
 
 
 //backend
-Route::resource('products', ProductController::class);
-Route::resource('categories', CategoryController::class);
-Route::resource('users', UserController::class);
-Route::resource('orders', OrderController::class);
-Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('products', 'Backend\\'. ProductController::class);
+Route::resource('categories', 'Backend\\'. CategoryController::class);
+Route::resource('users', 'Backend\\'. UserController::class);
+Route::resource('orders', 'Backend\\'. OrderController::class);
+Route::get('/home', 'Backend\HomeController@index')->name('home');
 
 //auth
 Auth::routes();

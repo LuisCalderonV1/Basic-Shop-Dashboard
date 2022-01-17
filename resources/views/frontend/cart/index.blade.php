@@ -30,6 +30,16 @@
 </div>
 <!--/modal-->
 <h2>My Shopping Cart</h2>
+@if (Session::has('troubles'))
+    <div class="alert alert-danger">
+        <ul class="mb-0" style="list-style:none;">
+        <?php $troubles = Session::get('troubles');?>
+            @foreach($troubles as $key => $value)
+            <li>{{$value['error']}}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 @if(session('status'))
   <div class="alert alert-info alert-dismissible fade show" role="alert">
     <strong>{{ session('status') }}</strong>

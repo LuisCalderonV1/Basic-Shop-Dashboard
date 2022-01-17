@@ -18,7 +18,7 @@
                         @else
                         <div class="col-md-4 clearfix d-none d-md-block"> 
                         @endif                   
-                        @include('frontend._carousel-product-card')
+                        @include('frontend.products._carousel-product-card')
                         </div>
                     <?php $n++; ?>
                     @endforeach
@@ -35,7 +35,7 @@
                         @else
                         <div class="col-md-4 clearfix d-none d-md-block"> 
                         @endif                   
-                        @include('frontend._carousel-product-card')
+                        @include('frontend.products._carousel-product-card')
                         </div>
                     <?php $n++; ?>
                     @endforeach
@@ -76,7 +76,7 @@
             <div class="carousel-item <?= $n==0 ? 'active' : ''; ?> ">
                 <div class="row"> 
                     <div class="col-12">
-                        @include('frontend._carousel-product-card')
+                        @include('frontend.products._carousel-product-card')
                     </div>          
                 </div>
             </div>
@@ -89,7 +89,7 @@
             <div class="carousel-item">
                 <div class="row"> 
                     <div class="col-12">
-                        @include('frontend._carousel-product-card')
+                        @include('frontend.products._carousel-product-card')
                     </div>          
                 </div>
             </div>
@@ -101,7 +101,7 @@
             <div class="carousel-item">
                 <div class="row"> 
                     <div class="col-12">
-                        @include('frontend._carousel-product-card')
+                        @include('frontend.products._carousel-product-card')
                     </div>          
                 </div>
             </div>

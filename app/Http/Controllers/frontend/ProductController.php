@@ -29,7 +29,7 @@ class ProductController extends Controller
         ->get()
         ->toArray();
         $related = (array_chunk($rel, 3, true));
-        return view('frontend/show-product', ['product' => $product,'related' => $related]);
+        return view('frontend.products.show-one-product', ['product' => $product,'related' => $related]);
     }
 
     /**
@@ -39,7 +39,7 @@ class ProductController extends Controller
     {
         $title = 'New Products';
         $products = Product::orderBy('created_at', 'desc')->paginate(self::PAGINATION);
-        return view('frontend/show-products', ['products' => $products, 'title' => $title]);
+        return view('frontend.products.show-all-products', ['products' => $products, 'title' => $title]);
     }
 
     /**
@@ -49,7 +49,7 @@ class ProductController extends Controller
     {
         $title = 'All offers';
         $products = Product::where('discount', '>', 0)->orderBy('created_at', 'desc')->paginate(self::PAGINATION);
-        return view('frontend/show-products', ['products' => $products, 'title' => $title]);
+        return view('frontend.products.show-all-products', ['products' => $products, 'title' => $title]);
     }
 
     /**
@@ -60,7 +60,7 @@ class ProductController extends Controller
         $title = 'Your search results';
         $name = sanitize($request->name);
         $products = Product::where('name', 'LIKE', "%$name%")->paginate(self::PAGINATION);
-        return view('frontend/show-products', ['products' => $products, 'title' => $title]);
+        return view('frontend.products.show-all-products', ['products' => $products, 'title' => $title]);
     }
 
 }

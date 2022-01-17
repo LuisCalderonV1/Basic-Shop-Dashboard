@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
 use App\Order;
 use App\OrderContent;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateOrderPut;
+use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {

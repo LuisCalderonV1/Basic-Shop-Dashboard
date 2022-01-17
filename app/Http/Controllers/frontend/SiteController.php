@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\frontend;
 
 use App\Product;
 use App\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class SiteController extends Controller
 {
@@ -31,7 +32,7 @@ class SiteController extends Controller
             $random_category = [];
         }
         
-        return view('welcome', ['products' => $new_products, 'categories' => $categories, 
+        return view('frontend.welcome', ['products' => $new_products, 'categories' => $categories, 
         'offers' => $offers , 'last_in_category' => $last_in_category , 'random_category' => $random_category]);
         
 

@@ -81,8 +81,12 @@ $categories = getCategories();
             </form>
           </li>
         </ul>
-        <ul class="nav border-bottom">               
-          @for ($n=0;$n<=3 && $n<$categories->count();$n++)
+        <!--Categories--bar-->
+        <ul class="nav border-bottom flex-nowrap" style="overflow: auto;">    
+          <li class="nav-item">
+            <a class="nav-link active" href="{{route('frontend.cart.index')}}"><b>Cart</b></a>
+          </li>           
+          @for ($n=0;$n<=8 && $n<$categories->count();$n++)
           <li class="nav-item">
             <a class="nav-link active" href="{{route('frontend.categories.show',$categories[$n]->id)}}"><b>{{$categories[$n]->name}}</b></a>
           </li>
@@ -105,22 +109,22 @@ $categories = getCategories();
 
         <!-- Right -->
         <div>
-          <a href="" class="me-4 text-reset">
+          <a href="" class="me-4 text-reset px-2 h5">
             <i class="fab fa-facebook-f"></i>
           </a>
-          <a href="" class="me-4 text-reset">
+          <a href="" class="me-4 text-reset px-2 h5">
             <i class="fab fa-twitter"></i>
           </a>
-          <a href="" class="me-4 text-reset">
+          <a href="" class="me-4 text-reset px-2 h5">
             <i class="fab fa-google"></i>
           </a>
-          <a href="" class="me-4 text-reset">
+          <a href="" class="me-4 text-reset px-2 h5">
             <i class="fab fa-instagram"></i>
           </a>
-          <a href="" class="me-4 text-reset">
+          <a href="" class="me-4 text-reset px-2 h5">
             <i class="fab fa-linkedin"></i>
           </a>
-          <a href="" class="me-4 text-reset">
+          <a href="" class="me-4 text-reset px-2 h5">
             <i class="fab fa-github"></i>
           </a>
         </div>
@@ -130,15 +134,15 @@ $categories = getCategories();
 
       <!-- Section: Links  -->
       <section class="">
-        <div class="container text-center text-md-start mt-5">
+        <div class="container text-center text-md-start mt-4">
           <!-- Grid row -->
           <div class="row mt-3">
             <!-- Grid column -->
-            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+            <div class="col-6 col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
               <!-- Links -->
-              <h6 class="text-uppercase fw-bold mb-4">
+              <h5 class="text-uppercase fw-bold mb-4">
                 Products
-              </h6>
+              </h5>
               @for ($n=0;$n<=3 && $n<$categories->count();$n++)
               <p>
                 <a href="{{route('frontend.categories.show',$categories[$n]->id)}}" class="text-reset">{{$categories[$n]->name}}</a>
@@ -148,11 +152,11 @@ $categories = getCategories();
             <!-- Grid column -->
 
             <!-- Grid column -->
-            <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+            <div class="col-6 col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
               <!-- Links -->
-              <h6 class="text-uppercase fw-bold mb-4">
+              <h5 class="text-uppercase fw-bold mb-4">
                 Useful links
-              </h6>
+              </h5>
               <p>
                 <a href="#!" class="text-reset">Pricing</a>
               </p>
@@ -168,12 +172,27 @@ $categories = getCategories();
             </div>
             <!-- Grid column -->
 
-            <!-- Grid column -->
-            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+             <!-- Grid column -->
+             <div class="col-6 col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
               <!-- Links -->
-              <h6 class="text-uppercase fw-bold mb-4">
+              <h5 class="text-uppercase fw-bold mb-4">
+                Information
+              </h5>
+              <p>
+                <a href="#!" class="text-reset">About Us</a>
+              </p>
+              <p>
+                <a href="#!" class="text-reset">Cookie Policy</a>
+              </p>
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-6 col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+              <!-- Links -->
+              <h5 class="text-uppercase fw-bold mb-4">
                 Contact
-              </h6>
+              </h5>
               <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
               <p>
                 <i class="fas fa-envelope me-3"></i>
@@ -191,7 +210,7 @@ $categories = getCategories();
 
       <!-- Copyright -->
       <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">    
-        <a class="text-reset fw-bold" href="">{{ config('app.name', 'Shop') }}</a> | 2022
+        <a class="text-reset fw-bold" href="">{{ config('app.name', 'Shop') }}</a> | {{date('Y')}}
       </div>
       <!-- Copyright -->
     </footer>

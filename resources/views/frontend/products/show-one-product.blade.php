@@ -1,5 +1,13 @@
 @extends('layouts.frontend')
 @section('content')
+@if(session('status'))
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+      <strong>{{ session('status') }}</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+@endif
 <div class="row product-info mt-5">
     <div class="col-12 col-md-7 px-0">
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -64,7 +72,7 @@
 <!--Carousel-->
 <div class="my-2 my-md-5">
     <h3>Related Products</h3>
-    @include('frontend._products-carousel')
+    @include('frontend.products._products-carousel')
 </div>
 <script type = "text/javascript">
       $('#add-to-cart').click(function(e){
@@ -79,7 +87,7 @@
         url: '{{ route('frontend.cart.ajax_store') }}',
         data: {'product_id':"{{$product->id}}"},
         success: function(data){
-            alert(data.result);
+            alert(data.status);
             $('#inCart').html(data.totalCartItems);
         },
         error:function(){

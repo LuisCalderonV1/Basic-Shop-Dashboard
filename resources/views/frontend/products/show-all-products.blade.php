@@ -10,7 +10,7 @@
     </div>
     <div class="row">
         @foreach ($products as $product)
-        @include('frontend._product-card')   
+        @include('frontend.products._product-card')   
         @endforeach
     </div>
 </div>
