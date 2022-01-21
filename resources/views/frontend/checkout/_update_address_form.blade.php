@@ -58,7 +58,9 @@
       <label for="state">State</label>
       <select id="state" class="form-control" name="state">
         <option></option>
-        <option value="Quintana Roo" {{$user->address->state == 'Quintana Roo' ? 'selected' : '' }}>Quintana Roo</option>
+        @foreach($states as $state)
+        <option value="{{$state}}" {{$user->address->state == $state ? 'selected' : '' }}>{{$state}}</option>
+        @endforeach
       </select>
       @error('state')
       <span class="text-danger">{{ $message }}</span>

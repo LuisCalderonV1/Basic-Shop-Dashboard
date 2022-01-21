@@ -21,7 +21,7 @@ $categories = getCategories();
 <body> 
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="{{route('frontend.site.index')}}"><b>{{ config('app.name', 'Shop') }}</b></a>
+            <a class="navbar-brand" href="{{route('frontend.site.index')}}"><b>{{ getSettings('store_name')['value'] }}</b></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -193,13 +193,12 @@ $categories = getCategories();
               <h5 class="text-uppercase fw-bold mb-4">
                 Contact
               </h5>
-              <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
+              <p><i class="fas fa-home me-3"></i>{{getSettings('store_address')['value']}}</p>
               <p>
                 <i class="fas fa-envelope me-3"></i>
-                info@example.com
+                {{getSettings('store_mail')['value']}}
               </p>
-              <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
-              <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+              <p><i class="fas fa-phone me-3"></i> {{getSettings('store_phone')['value']}}</p>
             </div>
             <!-- Grid column -->
           </div>
@@ -210,7 +209,7 @@ $categories = getCategories();
 
       <!-- Copyright -->
       <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">    
-        <a class="text-reset fw-bold" href="">{{ config('app.name', 'Shop') }}</a> | {{date('Y')}}
+        <a class="text-reset fw-bold" href="">{{ getSettings('store_name')['value'] }}</a> | {{date('Y')}}
       </div>
       <!-- Copyright -->
     </footer>
@@ -240,7 +239,7 @@ $categories = getCategories();
                 modal.find('#form').attr('action', url);
                 })
            });
-      </script>
+    </script>
 </body>
 </body>
 </html>

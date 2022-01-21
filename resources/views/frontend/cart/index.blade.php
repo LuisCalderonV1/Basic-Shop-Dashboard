@@ -81,9 +81,9 @@
         @if ($item->product->discount > 0)
         <span class="mb-0" style="text-decoration: line-through;">${{number_format($item->product->price)}}</span>
         <span class="text-danger"><b>-{{$item->product->discount}}%</b></span>
-        <p class="text-danger"><b>${{number_format($finalPrice)}}</b></p>
+        <p class="text-danger"><b>${{number_format($finalPrice)}} {{$currency}}</b></p>
         @else
-        <p>${{number_format($finalPrice)}}</p>
+        <p>${{number_format($finalPrice)}} {{$currency}}</p>
         @endif
     </td>
     <td>${{number_format($totalByItem)}}</td>
@@ -107,7 +107,7 @@
     </table>
 </div>
 <!--/table-->
-<p class="h5"><b>Subtotal: ${{number_format($subtotal)}}</b></p>
+<p class="h5"><b>Subtotal: ${{number_format($subtotal)}} {{getSettings('currency_code')['value']}}</b></p>
 <a class="btn btn-warning btn-lg" href="{{route('frontend.checkout.create_order')}}"><b>Proceed to buy</b></a>
 @else
 <div class="py-3">

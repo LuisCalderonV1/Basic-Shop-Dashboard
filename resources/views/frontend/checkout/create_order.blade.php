@@ -26,7 +26,7 @@
                 <p class="h5">Total:</p>
             </div>
             <div class="col-6">
-                <p class="h5 text-danger"><b>${{number_format($total)}}</b></p>
+                <p class="h5 text-danger"><b>${{number_format($total)}} {{getSettings('currency_code')['value']}}</b></p>
             </div>
         </div>
     </div>

@@ -25,8 +25,13 @@ class UpdateProductPost extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:100|unique:products,id,' . $this->id,
-            'description' => 'required',
+
+            'name' => 'required|string|max:255|unique:products,id,' . $this->id,
+            'description' => 'required|max:255|string',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'price' => 'required|numeric',
+            'discount' => 'sometimes|nullable|numeric',
+            'stock' => 'required|numeric',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }

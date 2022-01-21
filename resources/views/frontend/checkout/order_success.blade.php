@@ -9,5 +9,5 @@
 @endforeach
 <p class="mb-0">Subtotal: <b>${{number_format($order->subtotal)}}</b></p>
 <p class="mb-0">Shipping: <b>${{number_format($order->shipping)}}</b></p>
-<p>Order Total: <b>${{number_format($order->total)}}</b></p>
+<p>Order Total: <b>${{number_format($order->total)}} {{getSettings('currency_code')['value']}}</b></p>
 @endsection

@@ -2,6 +2,7 @@
 
 use App\Cart;
 use App\Category;
+use App\Setting;
 
 function getFinalPrice($item){
     if($item->product->discount > 0){
@@ -53,4 +54,8 @@ function sanitize($string){
     $string= htmlentities($string);
 
     return $string;
+}
+
+function getSettings(string $key){
+    return $settings = Setting::where('key',$key)->first();
 }

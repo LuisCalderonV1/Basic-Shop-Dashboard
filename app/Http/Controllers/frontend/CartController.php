@@ -22,8 +22,9 @@ class CartController extends Controller
     public function index()
     {
         $uid = checkUID();
+        $currency = getSettings('currency_code')['value'];
         $itemsInCart = Cart::where('uid', '=', $uid)->orderBy('created_at', 'desc')->get();  
-        return view('frontend.cart.index', ['itemsInCart' => $itemsInCart]);
+        return view('frontend.cart.index', ['itemsInCart' => $itemsInCart, 'currency' => $currency]);
     }
 
     /**
@@ -54,7 +55,7 @@ class CartController extends Controller
             $status = 'Product added to the cart';
         }        
         else{
-            $status = 'Insuficient inventory, ' . $stock . ' in stock';
+            $status = 'Insufficient inventory, ' . $stock . ' in stock';
         }
         
         return response()->json(['status'=>$status, 'totalCartItems' => $totalCartItems]);

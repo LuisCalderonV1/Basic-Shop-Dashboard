@@ -33,7 +33,7 @@ class StoreAddressPost extends FormRequest
             'suburb' => 'required|max:30|string',
             'zip' => 'numeric|required|digits_between:3,10',
             'phone2' => 'sometimes|nullable|numeric|digits_between:10,10',
-            'instructions' => 'sometimes|nullable|max:100|alpha_num',
+            'instructions' => 'sometimes|nullable|max:100|string',
         ];
     }
 }

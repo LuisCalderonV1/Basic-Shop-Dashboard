@@ -24,10 +24,11 @@ class UpdateUserPut extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'email' => 'required|max:100|unique:users,id,' . $this->id,
+            'name' => 'required|max:50|string',
             'lastname' => 'required|max:50|string',
             'rol_id' => 'numeric|required|digits_between:1,2',
+            'email' => 'required|unique:users|max:100|string',
+            'password' => 'required|max:12|string',
         ];
     }
 }

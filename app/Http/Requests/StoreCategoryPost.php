@@ -24,8 +24,8 @@ class StoreCategoryPost extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:products|max:100',
-            'description' => 'required',
+            'name' => 'required|unique:products|max:100|string',
+            'description' => 'required|max:500|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }

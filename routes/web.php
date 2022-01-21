@@ -41,6 +41,8 @@ Route::resource('products', 'Backend\\'. ProductController::class);
 Route::resource('categories', 'Backend\\'. CategoryController::class);
 Route::resource('users', 'Backend\\'. UserController::class);
 Route::resource('orders', 'Backend\\'. OrderController::class);
+Route::get('settings', 'Backend\SettingController@edit')->name('settings.edit');
+Route::put('settings', 'Backend\SettingController@update')->name('settings.update');
 Route::get('/home', 'Backend\HomeController@index')->name('home');
 
 //auth

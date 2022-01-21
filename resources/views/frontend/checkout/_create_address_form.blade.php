@@ -58,7 +58,9 @@
       <label for="state">State</label>
       <select id="state" class="form-control" name="state">
         <option></option>
-        <option value="Quintana Roo" {{$selected = old('state') == 'Quintana Roo' ? 'selected' : '' }}>Quintana Roo</option>
+        @foreach($states as $state)
+        <option value="{{$state}}" {{$selected = old('state') == $state ? 'selected' : '' }}>{{$state}}</option>
+        @endforeach
       </select>
       @error('state')
       <span class="text-danger">{{ $message }}</span>
@@ -120,7 +122,7 @@
                 <p class="h5">Total:</p>
             </div>
             <div class="col-6">
-                <p class="h5 text-danger"><b>${{number_format($total)}}</b></p>
+                <p class="h5 text-danger"><b>${{number_format($total)}} {{getSettings('currency_code')['value']}}</b></p>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('content')
 <div class="banner d-flex justify-content-center">
-    <img src="{{url('images/banner.png')}}" alt="" class="img-fluid">
+    <img src="{{ url('images/' . getSettings('banner_image')['value'])}}" alt="" class="img-fluid">
 </div>
 <!--New-products-->
 <div class="py-3">

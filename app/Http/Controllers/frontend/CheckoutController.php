@@ -9,24 +9,26 @@ use App\Address;
 use App\Product;
 use App\Category;
 use App\OrderContent;
+use App\Mail\SendMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Config;
 use App\Http\Requests\StoreAddressPost;
 use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
 {
+    const PAYMENT_STATUS = "Pending";
+    const GENERAL_STATUS = "Pending";
+    
     public function __construct()
     {
         $this->middleware(['auth', 'check.cart', 'check.stocks'])->except('success');
         $this->middleware(['check.address'])->only('createOrder' ,'storeOrder');
     }
-    const PAYMENT_STATUS = "Pending";
-    const GENERAL_STATUS = "Pending";
-    const SHIPPING_PRICE = 190;
-
     /**
      * Show the view for checkout process
      */
@@ -38,7 +40,7 @@ class CheckoutController extends Controller
         return view('frontend.checkout.create_order',
         [
             'subtotal' => $subtotal, 
-            'shippingPrice' => self::SHIPPING_PRICE,
+            'shippingPrice' => $this->shipping(),
             'total' => $total,
         ]);
     }
@@ -58,7 +60,7 @@ class CheckoutController extends Controller
         $order = new Order;
         $order->user_id = auth()->user()->id;
         $order->subtotal = $subtotal;
-        $order->shipping = self::SHIPPING_PRICE;
+        $order->shipping = $this->shipping();
         $order->total = $total;
         $order->payment_status = self::PAYMENT_STATUS;
         $order->general_status = self::GENERAL_STATUS;
@@ -102,11 +104,12 @@ class CheckoutController extends Controller
      */
     public function createAddress()
     {
+        $states = Config::get('states');
         $prices = $this->getPrices();
         extract($prices);
 
-        return view('frontend.checkout.create_address', ['subtotal' => $subtotal, 'shippingPrice' => self::SHIPPING_PRICE,
-            'total' => $total]);
+        return view('frontend.checkout.create_address', ['subtotal' => $subtotal, 'shippingPrice' => $this->shipping(),
+            'total' => $total , 'states' => $states]);
         
     }
 
@@ -139,7 +142,8 @@ class CheckoutController extends Controller
     public function editAddress($user_id)
     {
         $user = User::findOrFail($user_id);
-        return view('frontend.checkout.update_address', ['user' => $user]);
+        $states = Config::get('states');
+        return view('frontend.checkout.update_address', ['user' => $user, 'states' => $states]);
     }
 
     /**
@@ -174,6 +178,16 @@ class CheckoutController extends Controller
         $order = Order::where('id', '=', $order_id)->where('public_key', '=', $public_key)->first();
         if($order){
             $orderContent = orderContent::where('order_id', '=', $order->id)->orderBy('created_at', 'desc')->get();
+
+            //compose mail
+            $details = [
+               'order' => $order,
+               'orderContent' => $orderContent
+            ];
+            
+            $mailAddress = Auth::user()->email;
+            //Mail::to($mailAddress)->send(new SendMail($details));
+            
             return view('frontend.checkout.order_success',['order' => $order, 'orderContent' => $orderContent]);
         }
         else{
@@ -196,14 +210,14 @@ class CheckoutController extends Controller
             $subtotal = getSubtotal($subtotal,$totalByItem);
         }
             
-        $total = $subtotal +  self::SHIPPING_PRICE;
+        $total = $subtotal +  $this->shipping();
 
         return $prices= ['subtotal' => $subtotal, 'total' => $total];
     }   
     /**
     * generate public key
     */
-    protected function generateRandomString($length = 10) {
+    private function generateRandomString($length = 10) {
         $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -211,5 +225,9 @@ class CheckoutController extends Controller
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+    private function shipping(){
+        return $shippingPrice = getSettings('shipping_cost')['value'];
     }
 }

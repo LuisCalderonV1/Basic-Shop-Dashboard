@@ -25,8 +25,8 @@ class StoreProductPost extends FormRequest
     {
         return [
             'category_id' => 'required|numeric',
-            'name' => 'required|unique:products|max:100',
-            'description' => 'required',
+            'name' => 'required|unique:products|max:255|string',
+            'description' => 'required|max:255|string',
             'price' => 'required|numeric',
             'discount' => 'sometimes|nullable|numeric',
             'stock' => 'required|numeric',

@@ -1,4 +1,5 @@
 <div class="card h-100">
+<?php $currency = getSettings('currency_code')['value'] ?>
     <a href="{{route('frontend.products.show', $product->id)}}" style="text-decoration:none;" class="text-dark">
         <img src="{{url('images') . '/' . $product->image}}" class="card-img-top p-1" alt="..." >
         <div class="card-body">
@@ -12,10 +13,11 @@
             @if ($product->discount > 0)
             <span class="card-text mb-0" style="text-decoration: line-through;">${{number_format($product->price)}}</span>
             <span class="text-danger"><b>-{{$product->discount}}%</b></span>
-            <p class="card-text text-danger h5"><b>${{number_format($product->price - ($product->discount * $product->price / 100) )}}</b></p>
+            <?php $finalPrice = $product->price - ($product->discount * $product->price / 100); ?>
+            <p class="card-text text-danger h3"><b>${{ number_format($finalPrice) }} {{ $currency }}</b></p>
             @else
             <span class="card-text mb-0"><b>Only</b></span>
-            <p class="card-text h5 text-danger"><b>${{number_format($product->price)}}</b> </p>
+            <p class="card-text h5 text-danger"><b>${{number_format($product->price)}} {{$currency}}</b> </p>
             @endif
         </div>
     </a>
