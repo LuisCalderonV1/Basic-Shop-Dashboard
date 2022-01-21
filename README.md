@@ -1,3 +1,4 @@
+![logo_laravel](logo_laravel.png)
 <h1>ecommerce platform made with Laravel</h1>
 </hr>
 <h2>Online store based on Laravel 7 + Bootstrap 4.6</h2> 
