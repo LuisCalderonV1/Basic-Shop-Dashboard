@@ -24,6 +24,11 @@
     <li>Import mystore.sql into your new database</li>
     <li>Set you app name in your .env file</li>
     <li>Run php artisan db:seed</li>
+    <li>Access admin panel with credentials:</li>
+    <ul>
+        <li>e-mail: admin@store.com</li>
+        <li>password: admin@store.com</li>
+    </ul>
 </ul>
 <h3>Mailing</h3>
 <ul>
