@@ -46,7 +46,7 @@
     </ul>
     <li>Uncomment the following line at frontend/CheckoutController:</li>
     <p>Mail::to($mailAddress)->send(new SendMail($details));</p>
-    <li>IMPORTANT! For production purposes comment the following lines:</li>
+    <li>IMPORTANT! For production purposes comment the following lines on config/mail.php:</li>
     <p>
         'stream' => [
             'ssl' => [
