@@ -28,7 +28,7 @@ class UpdateUserPut extends FormRequest
             'lastname' => 'required|max:50|string',
             'rol_id' => 'numeric|required|digits_between:1,2',
             'email' => 'required|unique:users|max:100|string',
-            'password' => 'required|max:12|string',
+            'password' => 'sometime|nullable|max:12|string',
         ];
     }
 }
